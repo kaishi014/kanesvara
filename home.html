@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full bg-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIPRAM KANESVARA - Pramuka SMPN 2 Bojonggede</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pramuka: {
+                            // Diubah dari Coklat/Hijau/Emas menjadi Biru & Pink
+                            green: '#1E40AF',       // Royal Blue (Primary)
+                            greenlight: '#2563EB',  // Bright Blue
+                            brown: '#831843',       // Dark Pink / Rose (Secondary)
+                            brownlight: '#9D174D',  // Medium Pink
+                            gold: '#EC4899',        // Vibrant Pink / Magenta (Accent)
+                            goldhover: '#DB2777',   // Hover Pink
+                            bg: '#FDF2F8'           // Light Soft Pinkish White
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .bg-scout-pattern {
+            background-color: #1E40AF;
+            background-image: radial-gradient(#EC4899 0.75px, transparent 0.75px), radial-gradient(#EC4899 0.75px, #1E40AF 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            opacity: 0.98;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col font-sans antialiased text-slate-800 bg-slate-100" 
+      x-data="pramukaApp()">
+
+    <!-- TOP ROLE SWITCHER BAR (Interactive Demo Banner) -->
+    <div class="bg-slate-900 text-white text-xs px-4 py-2 flex flex-wrap items-center justify-between border-b border-pink-900/40 z-50 sticky top-0 shadow-md">
+        <div class="flex items-center space-x-2 my-1">
+            <span class="w-2 h-2 rounded-full bg-pink-400 animate-pulse"></span>
+            <span class="font-bold text-pink-400 uppercase tracking-wider"><i class="fa-solid fa-compass mr-1"></i> KANESVARA Demo Switcher:</span>
+            <span class="hidden md:inline text-slate-400">| Simulasikan Peran:</span>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2 my-1 overflow-x-auto">
+            <template x-for="role in rolesList" :key="role.id">
+                <button 
+                    @click="switchRole(role.id)" 
+                    :class="currentRole === role.id ? 'bg-pramuka-gold text-white font-bold shadow-md' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'"
+                    class="px-2.5 py-1 rounded text-xs transition flex items-center space-x-1 whitespace-nowrap">
+                    <i :class="role.icon"></i>
+                    <span x-text="role.name"></span>
+                </button>
+            </template>
+            <button @click="currentView = 'landing'" 
+                    :class="currentView === 'landing' ? 'bg-blue-600 text-white font-bold' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'"
+                    class="px-2.5 py-1 rounded text-xs transition flex items-center space-x-1 whitespace-nowrap ml-2 border border-slate-700">
+                <i class="fa-solid fa-globe"></i>
+                <span>Portal Publik</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- FLASH NOTIFICATION TOAST -->
+    <div class="fixed top-12 right-4 z-50 space-y-2 max-w-sm w-full px-4 pointer-events-none">
+        <template x-if="toast.show">
+            <div x-transition:enter="transition ease-out duration-300 transform"
+                 x-transition:enter-start="opacity-0 translate-y-2"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-200 transform"
+                 x-transition:leave-start="opacity-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 translate-y-2"
+                 :class="toast.type === 'success' ? 'bg-blue-900 border-pink-400' : 'bg-rose-800 border-rose-400'"
+                 class="pointer-events-auto flex items-center justify-between p-4 text-white rounded-xl shadow-2xl border-l-4">
+                <div class="flex items-center space-x-3">
+                    <i :class="toast.type === 'success' ? 'fa-circle-check text-pink-400' : 'fa-triangle-exclamation text-rose-300'" class="fa-solid text-xl"></i>
+                    <div>
+                        <p class="text-xs font-bold text-pink-300" x-text="toast.title"></p>
+                        <p class="text-xs font-medium" x-text="toast.message"></p>
+                    </div>
+                </div>
+                <button @click="toast.show = false" class="text-white/70 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </template>
+    </div>
+
+    <!-- MAIN APP CONTENT CONTAINER -->
+    <div class="flex-1 flex flex-col min-h-screen">
+
+        <!-- ========================================================================= -->
+        <!-- PUBLIC LANDING PAGE PORTAL                                                -->
+        <!-- ========================================================================= -->
+        <template x-if="currentView === 'landing'">
+            <div class="bg-slate-50 min-h-screen flex flex-col">
+                <!-- Public Header -->
+                <header class="bg-pramuka-green text-white sticky top-10 z-40 shadow-lg border-b border-pink-500/40">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-pramuka-gold flex items-center justify-center text-white text-xl font-black shadow-inner">⚜</div>
+                            <div>
+                                <h1 class="font-extrabold text-base sm:text-lg leading-tight text-pink-100">GERAKAN PRAMUKA SMPN 2 BOJONGGEDE</h1>
+                                <p class="text-xs text-blue-200 font-semibold">PASUKAN KANESVARA - GUDEP 12-095 & 12-096</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <button @click="currentView = 'dashboard'" class="bg-pramuka-gold hover:bg-pramuka-goldhover text-white font-bold text-xs sm:text-sm px-4 py-2 rounded-lg transition shadow-md flex items-center space-x-2">
+                                <i class="fa-solid fa-right-to-bracket"></i>
+                                <span>Masuk Dashboard (<span x-text="rolesList.find(r=>r.id===currentRole).name"></span>)</span>
+                            </button>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Hero Section -->
+                <section class="bg-scout-pattern text-white py-16 px-4 sm:px-6 text-center relative overflow-hidden">
+                    <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+                        <span class="inline-block bg-pink-400/20 text-pink-300 border border-pink-400/40 text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-widest">
+                            Official Portal KANESVARA SMPN 2 Bojonggede
+                        </span>
+                        <h2 class="text-3xl sm:text-5xl font-extrabold leading-tight tracking-tight">
+                            Pasukan Pramuka <br><span class="text-pink-300">KANESVARA SMPN 2 Bojonggede</span>
+                        </h2>
+                        <p class="text-blue-100 max-w-2xl mx-auto text-sm sm:text-base">
+                            Membentuk generasi penggalang yang berkarakter, tangguh, berprestasi, dan berlandaskan Tri Satya serta Dasa Darma Pramuka.
+                        </p>
+                        <div class="pt-4 flex justify-center gap-4">
+                            <a href="#galeri-terbaru" class="bg-pramuka-gold hover:bg-pramuka-goldhover text-white font-bold text-sm px-6 py-3 rounded-lg shadow-lg transition">
+                                <i class="fa-solid fa-newspaper mr-2"></i>Kabar & Galeri Kanesvara
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Public Live Feed -->
+                <section id="galeri-terbaru" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 class="text-2xl font-extrabold text-pramuka-green">Kabar & Dokumentasi Kanesvara</h3>
+                            <p class="text-sm text-slate-500">Dipublikasikan langsung oleh Tim Humas Kanesvara SMPN 2 Bojonggede</p>
+                        </div>
+                        <span class="bg-pink-100 text-pink-800 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span> Live Publish
+                        </span>
+                    </div>
+
+                    <!-- Dynamic Posts Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <template x-for="post in posts" :key="post.id">
+                            <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md border border-slate-200 transition flex flex-col">
+                                <div class="relative h-48 bg-slate-200 overflow-hidden">
+                                    <img :src="post.image" :alt="post.title" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
+                                    <div class="absolute top-3 right-3 bg-pramuka-green/90 text-pink-200 text-xs font-bold px-2.5 py-1 rounded-full shadow">
+                                        <i class="fa-regular fa-calendar mr-1"></i> <span x-text="post.date"></span>
+                                    </div>
+                                </div>
+                                <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+                                    <div>
+                                        <div class="flex items-center space-x-2 text-xs text-pink-600 font-semibold mb-1">
+                                            <i class="fa-solid fa-bullhorn"></i>
+                                            <span x-text="post.author"></span>
+                                        </div>
+                                        <h4 class="font-bold text-slate-800 text-base leading-snug" x-text="post.title"></h4>
+                                        <p class="text-slate-600 text-xs mt-2 line-clamp-3 leading-relaxed" x-text="post.description"></p>
+                                    </div>
+                                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                                        <span class="bg-pink-100 text-pink-900 px-2.5 py-0.5 rounded font-medium" x-text="post.category || 'Kegiatan Kanesvara'"></span>
+                                        <span class="text-blue-700 font-bold"><i class="fa-solid fa-check-circle text-blue-500 mr-1"></i> Kanesvara Official</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </section>
+
+                <!-- Footer -->
+                <footer class="bg-pramuka-brown text-pink-100/80 py-8 text-center text-xs border-t border-pink-900">
+                    <p class="font-bold text-pink-300 mb-1">GERAKAN PRAMUKA PASUKAN KANESVARA</p>
+                    <p class="text-pink-200/70 mb-2">Pangkalan SMPN 2 Bojonggede - Kabupaten Bogor</p>
+                    <p>© 2026 KANESVARA SMPN 2 Bojonggede. All rights reserved.</p>
+                </footer>
+            </div>
+        </template>
+
+        <!-- ========================================================================= -->
+        <!-- DASHBOARD SHELL (For all 5 authenticated roles)                            -->
+        <!-- ========================================================================= -->
+        <template x-if="currentView === 'dashboard'">
+            <div x-data="{ isSidebarOpen: false }" class="min-h-screen flex bg-slate-100">
+
+                <!-- SIDEBAR -->
+                <aside :class="isSidebarOpen ? 'translate-x-0' : '-translate-x-full'" 
+                       class="fixed inset-y-0 left-0 z-40 w-64 bg-pramuka-brown text-white transition-transform duration-300 md:translate-x-0 md:static md:inset-0 shadow-2xl flex flex-col justify-between">
+                    <div>
+                        <!-- Sidebar Brand -->
+                        <div class="flex items-center justify-between px-6 py-5 bg-pramuka-green border-b border-blue-900/50">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-9 h-9 rounded-full bg-pramuka-gold flex items-center justify-center font-bold text-white text-lg shadow-md">⚜</div>
+                                <div>
+                                    <span class="font-bold text-pink-100 text-base leading-none block">KANESVARA</span>
+                                    <span class="text-[10px] text-blue-200 tracking-wider font-semibold uppercase block mt-1">SMPN 2 Bojonggede</span>
+                                </div>
+                            </div>
+                            <button @click="isSidebarOpen = false" class="md:hidden text-blue-200 hover:text-white">
+                                <i class="fa-solid fa-xmark text-lg"></i>
+                            </button>
+                        </div>
+
+                        <!-- Active Role Indicator Banner -->
+                        <div class="px-4 py-3 bg-pink-950/40 border-b border-pink-800/40 flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-pink-500/20 text-pink-300 flex items-center justify-center">
+                                <i :class="rolesList.find(r=>r.id===currentRole).icon" class="text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-pink-300/80 font-bold uppercase tracking-wider">Hak Akses Saat Ini</p>
+                                <p class="text-xs font-bold text-white" x-text="rolesList.find(r=>r.id===currentRole).name"></p>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Navigation Menu -->
+                        <nav class="mt-4 px-3 space-y-1">
+                            <template x-for="item in activeNavItems" :key="item.id">
+                                <button @click="activeTab = item.id" 
+                                        :class="activeTab === item.id ? 'bg-pramuka-green text-pink-200 font-bold shadow-md border-l-4 border-pramuka-gold' : 'text-pink-100/70 hover:bg-pink-900/50 hover:text-white'"
+                                        class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-xs transition">
+                                    <i :class="item.icon" class="w-5 text-center"></i>
+                                    <span x-text="item.label"></span>
+                                </button>
+                            </template>
+                        </nav>
+                    </div>
+
+                    <!-- User Profile Footer -->
+                    <div class="p-4 border-t border-pink-900 bg-pink-950/80 flex items-center justify-between">
+                        <div class="flex items-center space-x-2.5 overflow-hidden">
+                            <img :src="currentUser.avatar" class="w-8 h-8 rounded-full border border-pramuka-gold object-cover">
+                            <div class="truncate">
+                                <p class="text-xs font-bold text-pink-100 truncate" x-text="currentUser.name"></p>
+                                <p class="text-[10px] text-pink-300 truncate" x-text="currentUser.subtext"></p>
+                            </div>
+                        </div>
+                        <button @click="currentView = 'landing'" title="Ke Portal Publik Kanesvara" class="text-pink-300/60 hover:text-pink-300 p-1.5 transition">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- MAIN WORKSPACE -->
+                <div class="flex-1 flex flex-col overflow-hidden">
+                    
+                    <!-- Mobile Header Bar -->
+                    <header class="bg-pramuka-green text-white px-4 py-3 flex items-center justify-between md:hidden shadow-md">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-pink-300 font-bold">⚜ KANESVARA</span>
+                            <span class="text-xs text-blue-200">/ <span x-text="rolesList.find(r=>r.id===currentRole).name"></span></span>
+                        </div>
+                        <button @click="isSidebarOpen = !isSidebarOpen" class="text-white p-1">
+                            <i class="fa-solid fa-bars text-lg"></i>
+                        </button>
+                    </header>
+
+                    <!-- Workspace Content Area -->
+                    <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+
+                        <!-- ROLE 1: SUPER ADMIN DASHBOARD -->
+                        <template x-if="currentRole === 'super_admin'">
+                            <div class="space-y-6 max-w-7xl mx-auto">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                                    <div>
+                                        <h2 class="text-2xl font-black text-pramuka-green">Control Center Super Admin</h2>
+                                        <p class="text-xs text-slate-500 mt-1">Sistem Informasi Gerakan Pramuka (SIPRAM) - SMPN 2 Bojonggede.</p>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button @click="showToast('Sistem Normal', 'Database Kanesvara SMPN 2 Bojonggede terhubung dengan baik.', 'success')" class="bg-blue-50 text-blue-800 text-xs font-bold px-3 py-2 rounded-lg hover:bg-blue-100">
+                                            <i class="fa-solid fa-database mr-1"></i> Status Database
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Metric Cards -->
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-blue-600">
+                                        <p class="text-xs font-bold text-slate-400 uppercase">Akun Pengguna</p>
+                                        <p class="text-2xl font-black text-slate-800 mt-1" x-text="adminUsers.length"></p>
+                                    </div>
+                                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-pink-500">
+                                        <p class="text-xs font-bold text-slate-400 uppercase">Poster Kanesvara</p>
+                                        <p class="text-2xl font-black text-slate-800 mt-1" x-text="posts.length"></p>
+                                    </div>
+                                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-indigo-500">
+                                        <p class="text-xs font-bold text-slate-400 uppercase">Agenda Kegiatan</p>
+                                        <p class="text-2xl font-black text-slate-800 mt-1" x-text="activities.length"></p>
+                                    </div>
+                                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-purple-500">
+                                        <p class="text-xs font-bold text-slate-400 uppercase">Security RBAC</p>
+                                        <p class="text-xs font-bold text-pink-600 mt-2"><i class="fa-solid fa-shield-check mr-1"></i> Active Middleware</p>
+                                    </div>
+                                </div>
+
+                                <!-- User Management Table -->
+                                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                                    <div class="px-6 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+                                        <h3 class="font-bold text-slate-800 text-sm"><i class="fa-solid fa-users-gear mr-2 text-pramuka-green"></i>Manajemen Pengguna SMPN 2 Bojonggede</h3>
+                                        <button @click="showToast('Tambah Akun', 'Form pendaftaran pengguna baru dipanggil.', 'success')" class="bg-pramuka-green text-white text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-pramuka-greenlight">
+                                            + Tambah Akun
+                                        </button>
+                                    </div>
+                                    <div class="overflow-x-auto">
+                                        <table class="w-full text-left text-xs text-slate-600">
+                                            <thead class="bg-slate-100 text-slate-500 font-bold uppercase">
+                                                <tr>
+                                                    <th class="px-6 py-3">Nama Pengguna</th>
+                                                    <th class="px-6 py-3">Email</th>
+                                                    <th class="px-6 py-3">Hak Akses (Role)</th>
+                                                    <th class="px-6 py-3">Status</th>
+                                                    <th class="px-6 py-3 text-right">Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-slate-100">
+                                                <template x-for="user in adminUsers" :key="user.id">
+                                                    <tr class="hover:bg-slate-50">
+                                                        <td class="px-6 py-3 font-bold text-slate-800 flex items-center space-x-2">
+                                                            <div class="w-7 h-7 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold text-xs" x-text="user.name.charAt(0)"></div>
+                                                            <span x-text="user.name"></span>
+                                                        </td>
+                                                        <td class="px-6 py-3" x-text="user.email"></td>
+                                                        <td class="px-6 py-3">
+                                                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase"
+                                                                  :class="{
+                                                                    'bg-purple-100 text-purple-800': user.role === 'Super Admin',
+                                                                    'bg-blue-100 text-blue-800': user.role === 'Ketua',
+                                                                    'bg-pink-100 text-pink-800': user.role === 'Humas',
+                                                                    'bg-emerald-100 text-emerald-800': user.role === 'Anggota',
+                                                                    'bg-slate-200 text-slate-800': user.role === 'Orang Tua'
+                                                                  }" x-text="user.role">
+                                                            </span>
+                                                        </td>
+                                                        <td class="px-6 py-3">
+                                                            <span class="text-blue-600 font-bold"><i class="fa-solid fa-circle text-[8px] mr-1"></i>Aktif</span>
+                                                        </td>
+                                                        <td class="px-6 py-3 text-right space-x-2">
+                                                            <button @click="showToast('Ubah Role', 'Memuka dialog edit peranan ' + user.name, 'success')" class="text-slate-400 hover:text-pink-600"><i class="fa-solid fa-pen"></i></button>
+                                                            <button @click="showToast('Reset Akses', 'Instruksi reset password dikirim.', 'success')" class="text-slate-400 hover:text-rose-600"><i class="fa-solid fa-key"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- ROLE 2: KETUA / PEMBINA KANESVARA -->
+                        <template x-if="currentRole === 'ketua'">
+                            <div class="space-y-6 max-w-7xl mx-auto">
+                                <div class="bg-pramuka-green text-white p-6 rounded-2xl shadow-md border-b-4 border-pramuka-gold flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                                    <div>
+                                        <span class="text-xs text-pink-300 font-bold uppercase tracking-widest">Executive Dashboard Pembina</span>
+                                        <h2 class="text-2xl font-black text-pink-100 mt-1">Ringkasan Pasukan KANESVARA</h2>
+                                        <p class="text-xs text-blue-200 mt-1">Pembina & Mabigus SMPN 2 Bojonggede.</p>
+                                    </div>
+                                    <button @click="syncGoogleSheets()" class="bg-pramuka-gold hover:bg-pramuka-goldhover text-white font-bold text-xs px-4 py-2.5 rounded-xl transition shadow flex items-center space-x-2">
+                                        <i class="fa-solid fa-file-excel"></i>
+                                        <span>Sync Google Sheets Kanesvara</span>
+                                    </button>
+                                </div>
+
+                                <!-- Executive Financial & Member Stats -->
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                                        <div class="flex justify-between items-center text-slate-400 text-xs font-bold uppercase">
+                                            <span>Rata-rata Presensi Regu</span>
+                                            <i class="fa-solid fa-chart-line text-blue-600 text-base"></i>
+                                        </div>
+                                        <p class="text-3xl font-black text-pramuka-green mt-3">94.8%</p>
+                                        <p class="text-xs text-blue-600 font-semibold mt-2"><i class="fa-solid fa-arrow-up mr-1"></i>Regu Elang & Dahlia Tertinggi</p>
+                                    </div>
+                                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                                        <div class="flex justify-between items-center text-slate-400 text-xs font-bold uppercase">
+                                            <span>Kas Regu & Dues Terkumpul</span>
+                                            <i class="fa-solid fa-wallet text-pink-500 text-base"></i>
+                                        </div>
+                                        <p class="text-3xl font-black text-slate-800 mt-3">Rp 6.450.000</p>
+                                        <p class="text-xs text-slate-500 mt-2">Dana Persami & Sanggar Kanesvara</p>
+                                    </div>
+                                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                                        <div class="flex justify-between items-center text-slate-400 text-xs font-bold uppercase">
+                                            <span>Penggalang Aktif</span>
+                                            <i class="fa-solid fa-users text-indigo-500 text-base"></i>
+                                        </div>
+                                        <p class="text-3xl font-black text-slate-800 mt-3">124 Siswa</p>
+                                        <p class="text-xs text-slate-500 mt-2">Pangkalan SMPN 2 Bojonggede</p>
+                                    </div>
+                                </div>
+
+                                <!-- Activity Log -->
+                                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h3 class="font-bold text-slate-800 text-base"><i class="fa-solid fa-calendar-check text-pramuka-green mr-2"></i>Agenda Kegiatan Kanesvara</h3>
+                                        <span class="text-xs text-slate-400">Sync Terakhir: <span x-text="lastSyncTime"></span></span>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <template x-for="act in activities" :key="act.id">
+                                            <div class="p-4 rounded-xl border border-slate-100 bg-slate-50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                                                <div>
+                                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-pink-100 text-pink-800 uppercase" x-text="act.code"></span>
+                                                    <h4 class="font-bold text-slate-800 text-sm mt-1" x-text="act.title"></h4>
+                                                    <p class="text-xs text-slate-500"><i class="fa-solid fa-location-dot mr-1"></i><span x-text="act.location"></span> • <span x-text="act.date"></span></p>
+                                                </div>
+                                                <span class="px-3 py-1 rounded-full text-xs font-bold"
+                                                      :class="act.status === 'Selesai' ? 'bg-blue-100 text-blue-800' : 'bg-pink-100 text-pink-800'"
+                                                      x-text="act.status">
+                                                </span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- ROLE 3: HUMAS KANESVARA -->
+                        <template x-if="currentRole === 'humas'">
+                            <div class="space-y-6 max-w-5xl mx-auto">
+                                <div>
+                                    <h2 class="text-2xl font-extrabold text-pramuka-green">Humas Quick Poster CMS</h2>
+                                    <p class="text-xs text-slate-500 mt-1">Publikasi dokumentasi kegiatan Kanesvara SMPN 2 Bojonggede tanpa ribet.</p>
+                                </div>
+
+                                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                                    <form @submit.prevent="publishPoster()" class="space-y-6">
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Judul Poster / Kegiatan Kanesvara</label>
+                                            <input type="text" x-model="newPost.title" required placeholder="Contoh: Latihan Rutin & Pelantikan Penggalang Ramu Kanesvara" 
+                                                   class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-pramuka-green focus:border-transparent outline-none">
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Ringkasan / Deskripsi Singkat</label>
+                                            <textarea x-model="newPost.description" rows="3" required placeholder="Tuliskan keterangan singkat kegiatan Pramuka SMPN 2 Bojonggede..." 
+                                                      class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-pramuka-green focus:border-transparent outline-none"></textarea>
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Foto Dokumentasi Kegiatan</label>
+                                            <div @click="$refs.photoInput.click()" 
+                                                 class="border-2 border-dashed border-slate-300 hover:border-pramuka-gold bg-slate-50 hover:bg-pink-50/40 rounded-2xl p-8 text-center cursor-pointer transition flex flex-col items-center justify-center min-h-[200px]">
+                                                <input type="file" x-ref="photoInput" @change="handleImageUpload($event)" accept="image/*" class="hidden">
+                                                
+                                                <template x-if="!newPost.imagePreview">
+                                                    <div class="space-y-2">
+                                                        <div class="w-12 h-12 rounded-full bg-pink-100 text-pramuka-gold flex items-center justify-center mx-auto text-xl">
+                                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                                        </div>
+                                                        <p class="text-xs font-bold text-slate-700">Klik atau Drag & Drop Foto Kegiatan Kanesvara</p>
+                                                        <p class="text-[10px] text-slate-400">JPG, PNG, WebP (Otomatis Kompresi Server)</p>
+                                                    </div>
+                                                </template>
+
+                                                <template x-if="newPost.imagePreview">
+                                                    <div class="relative w-full max-h-60 overflow-hidden rounded-xl">
+                                                        <img :src="newPost.imagePreview" class="w-full h-60 object-cover">
+                                                        <div class="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition flex items-center justify-center text-white text-xs font-bold">
+                                                            Klik untuk mengganti foto
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="w-full bg-pramuka-gold hover:bg-pramuka-goldhover text-white font-extrabold py-3.5 px-6 rounded-xl transition shadow-md flex items-center justify-center space-x-2">
+                                            <i class="fa-solid fa-paper-plane"></i>
+                                            <span>Terbitkan Ke Portal Publik (Live)</span>
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                                    <h3 class="font-bold text-slate-800 text-sm mb-4">Poster Terbit Terbaru</h3>
+                                    <div class="divide-y divide-slate-100">
+                                        <template x-for="p in posts.filter(item => item.author.includes('Kanesvara'))" :key="p.id">
+                                            <div class="py-3 flex items-center justify-between">
+                                                <div class="flex items-center space-x-3">
+                                                    <img :src="p.image" class="w-12 h-12 rounded-lg object-cover">
+                                                    <div>
+                                                        <p class="font-bold text-slate-800 text-xs" x-text="p.title"></p>
+                                                        <p class="text-[10px] text-slate-400" x-text="p.date"></p>
+                                                    </div>
+                                                </div>
+                                                <span class="px-2 py-1 rounded bg-blue-100 text-blue-800 text-[10px] font-bold">Terpublikasi</span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- ROLE 4: ANGGOTA KANESVARA (DIGITAL KTA CARD - PINK & BLUE THEME) -->
+                        <template x-if="currentRole === 'anggota'">
+                            <div class="space-y-6 max-w-4xl mx-auto">
+                                <div>
+                                    <h2 class="text-2xl font-extrabold text-pramuka-green">Portal Anggota Kanesvara</h2>
+                                    <p class="text-xs text-slate-500 mt-1">Kartu Tanda Anggota (KTA) Digital & Progres SKU Pramuka SMPN 2 Bojonggede.</p>
+                                </div>
+
+                                <!-- DIGITAL KTA CARD PREVIEW -->
+                                <div class="flex justify-center">
+                                    <div class="w-full max-w-md bg-gradient-to-br from-blue-700 via-blue-800 to-pink-900 text-white rounded-2xl shadow-2xl p-6 relative overflow-hidden border-2 border-pink-400">
+                                        <!-- Watermark Emblem -->
+                                        <div class="absolute -right-8 -bottom-8 opacity-10 text-9xl select-none">⚜</div>
+
+                                        <!-- KTA Header -->
+                                        <div class="flex items-center justify-between border-b border-pink-400/30 pb-4 mb-4">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center text-white font-black">⚜</div>
+                                                <div>
+                                                    <p class="text-[9px] font-bold text-pink-300 uppercase tracking-widest leading-none">KTA DIGITAL PRAMUKA</p>
+                                                    <p class="text-xs font-black text-white">KANESVARA - SMPN 2 BOJONGGEDE</p>
+                                                </div>
+                                            </div>
+                                            <span class="bg-pink-500 text-white text-[10px] font-black px-2 py-0.5 rounded uppercase">Penggalang</span>
+                                        </div>
+
+                                        <!-- KTA Body -->
+                                        <div class="flex items-start space-x-4">
+                                            <img :src="currentUser.avatar" class="w-20 h-24 rounded-lg object-cover border-2 border-pink-400 shadow-md">
+                                            <div class="flex-1 space-y-1 text-xs">
+                                                <div>
+                                                    <p class="text-[9px] text-blue-200 uppercase">Nama Anggota</p>
+                                                    <p class="font-black text-white text-sm" x-text="currentUser.name"></p>
+                                                </div>
+                                                <div>
+                                                    <p class="text-[9px] text-blue-200 uppercase">NTA / NISN</p>
+                                                    <p class="font-mono font-bold text-pink-300">02.24.115.2026.042</p>
+                                                </div>
+                                                <div>
+                                                    <p class="text-[9px] text-blue-200 uppercase">Gugus Depan / Regu</p>
+                                                    <p class="font-medium text-white">Gudep 12-095 - Regu Satria Garuda</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- KTA Footer & QR Code -->
+                                        <div class="mt-4 pt-3 border-t border-pink-400/30 flex items-center justify-between">
+                                            <div class="text-[9px] text-blue-100">
+                                                <p>Status Tingkat: <span class="font-bold text-pink-300">Penggalang Rakit</span></p>
+                                                <p class="text-slate-300">Pangkalan SMPN 2 Bojonggede</p>
+                                            </div>
+                                            <div class="bg-white p-1 rounded">
+                                                <div class="w-10 h-10 bg-slate-900 flex items-center justify-center text-pink-400 text-[7px] text-center font-mono leading-tight">
+                                                    KANESVARA
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- SKU Progress -->
+                                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
+                                    <h3 class="font-bold text-slate-800 text-sm"><i class="fa-solid fa-graduation-cap text-pramuka-green mr-2"></i>Syarat Kecakapan Umum (SKU) Penggalang</h3>
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between text-xs font-bold">
+                                            <span class="text-slate-700">Tingkat Penggalang Rakit</span>
+                                            <span class="text-pramuka-green">80% Selesai (16/20 Poin)</span>
+                                        </div>
+                                        <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+                                            <div class="bg-pramuka-green h-full rounded-full" style="width: 80%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- ROLE 5: ORANG TUA / WALI -->
+                        <template x-if="currentRole === 'orang_tua'">
+                            <div class="space-y-6 max-w-5xl mx-auto">
+                                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-12 h-12 rounded-full bg-pink-100 text-pink-700 flex items-center justify-center text-xl font-bold">
+                                            <i class="fa-solid fa-user-shield"></i>
+                                        </div>
+                                        <div>
+                                            <h2 class="text-xl font-extrabold text-slate-800">Portal Orang Tua / Wali Siswa</h2>
+                                            <p class="text-xs text-slate-500">Monitoring Kegiatan Pramuka Siswa: <span class="font-bold text-pramuka-green">Muhammad Rizky</span> (Kelas 8B SMPN 2 Bojonggede)</p>
+                                        </div>
+                                    </div>
+                                    <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-bold">
+                                        <i class="fa-solid fa-check-double mr-1"></i> Iuran Kanesvara Lunas
+                                    </span>
+                                </div>
+
+                                <!-- Attendance Status Card -->
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                                        <h3 class="font-bold text-slate-800 text-sm"><i class="fa-solid fa-user-check text-blue-600 mr-2"></i>Kehadiran Latihan Rutin Jumat</h3>
+                                        <div class="p-4 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-between">
+                                            <div>
+                                                <p class="text-xs font-bold text-blue-900">Jumat, 24 Oktober 2026</p>
+                                                <p class="text-[10px] text-blue-700">Latihan Tali-Menali & Pioneering</p>
+                                            </div>
+                                            <span class="bg-blue-600 text-white font-bold text-xs px-2.5 py-1 rounded">HADIR</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                                        <h3 class="font-bold text-slate-800 text-sm"><i class="fa-solid fa-file-signature text-pink-600 mr-2"></i>Izin Perkemahan Sabtu-Minggu (Persami)</h3>
+                                        <div class="p-4 rounded-xl bg-pink-50 border border-pink-200 flex items-center justify-between">
+                                            <div>
+                                                <p class="text-xs font-bold text-pink-900">Persami Kanesvara 2026</p>
+                                                <p class="text-[10px] text-pink-700">7 - 8 November 2026</p>
+                                            </div>
+                                            <button @click="showToast('Izin Disetujui', 'Surat izin ortu telah diverifikasi digital.', 'success')" 
+                                                    class="bg-pramuka-gold text-white font-bold text-xs px-3 py-1.5 rounded hover:bg-pramuka-goldhover">
+                                                Setujui Izin
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Restricted Parent Photo Gallery -->
+                                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                                    <h3 class="font-bold text-slate-800 text-sm mb-4"><i class="fa-solid fa-images text-pramuka-brown mr-2"></i>Galeri Dokumentasi Regu Ananda</h3>
+                                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                        <template x-for="img in parentGallery" :key="img.id">
+                                            <div class="relative group rounded-xl overflow-hidden border border-slate-200">
+                                                <img :src="img.url" class="w-full h-32 object-cover">
+                                                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition p-2 flex items-end">
+                                                    <p class="text-[10px] text-white font-bold" x-text="img.caption"></p>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+
+                    </main>
+                </div>
+            </div>
+        </template>
+
+    </div>
+
+    <!-- APP SCRIPT LOGIC -->
+    <script>
+        function pramukaApp() {
+            return {
+                currentView: 'landing', // 'landing' or 'dashboard'
+                currentRole: 'humas', // Default active role in demo
+                activeTab: 'main',
+                lastSyncTime: 'Baru saja',
+
+                toast: {
+                    show: false,
+                    title: '',
+                    message: '',
+                    type: 'success'
+                },
+
+                // Roles Definition
+                rolesList: [
+                    { id: 'super_admin', name: 'Super Admin', icon: 'fa-solid fa-user-shield' },
+                    { id: 'ketua', name: 'Pembina Kanesvara', icon: 'fa-solid fa-crown' },
+                    { id: 'humas', name: 'Humas Kanesvara', icon: 'fa-solid fa-bullhorn' },
+                    { id: 'anggota', name: 'Anggota Kanesvara', icon: 'fa-solid fa-id-card' },
+                    { id: 'orang_tua', name: 'Orang Tua / Wali', icon: 'fa-solid fa-people-roof' }
+                ],
+
+                // Role User Personas for SMPN 2 Bojonggede
+                userProfiles: {
+                    super_admin: { name: 'Kak Admin Kanesvara', subtext: 'Admin SMPN 2 Bojonggede', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150' },
+                    ketua: { name: 'Kak Pembina Utama', subtext: 'Pembina Kanesvara', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150' },
+                    humas: { name: 'Kak Tim Humas', subtext: 'Humas Kanesvara', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150' },
+                    anggota: { name: 'Muhammad Rizky', subtext: 'Penggalang Rakit (Regu Elang)', avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150' },
+                    orang_tua: { name: 'Bpk. Gunawan', subtext: 'Orang Tua M. Rizky', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150' }
+                },
+
+                get currentUser() {
+                    return this.userProfiles[this.currentRole];
+                },
+
+                // Navigation mapping
+                get activeNavItems() {
+                    const navs = {
+                        super_admin: [
+                            { id: 'main', label: 'Control Center', icon: 'fa-solid fa-chart-pie' },
+                            { id: 'users', label: 'Pengguna SMPN 2 BG', icon: 'fa-solid fa-users-gear' }
+                        ],
+                        ketua: [
+                            { id: 'main', label: 'Executive Dashboard', icon: 'fa-solid fa-chart-line' },
+                            { id: 'sync', label: 'Sync Log Kanesvara', icon: 'fa-solid fa-file-excel' }
+                        ],
+                        humas: [
+                            { id: 'main', label: 'Quick Poster Publisher', icon: 'fa-solid fa-paper-plane' }
+                        ],
+                        anggota: [
+                            { id: 'main', label: 'KTA Digital Kanesvara', icon: 'fa-solid fa-id-card' },
+                            { id: 'sku', label: 'Progres SKU', icon: 'fa-solid fa-graduation-cap' }
+                        ],
+                        orang_tua: [
+                            { id: 'main', label: 'Pemantauan Ananda', icon: 'fa-solid fa-child' }
+                        ]
+                    };
+                    return navs[this.currentRole] || [];
+                },
+
+                // Mock Initial Database Items for Kanesvara SMPN 2 Bojonggede
+                posts: [
+                    {
+                        id: 1,
+                        title: 'Penerimaan Anggota Baru & Orientasi Pasukan Kanesvara 2026',
+                        description: 'Kegiatan pembekalan awal bagi penggalang baru SMPN 2 Bojonggede dalam mengenal nilai-nilai Tri Satya & Dasa Darma.',
+                        image: 'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=600',
+                        date: '24 Okt 2026',
+                        author: 'Humas Kanesvara',
+                        category: 'Orientasi Kanesvara'
+                    },
+                    {
+                        id: 2,
+                        title: 'Gladi Pioneering & Tali Menali Regu Elang dan Dahlia',
+                        description: 'Latihan rutin Jumat sore pembuatan tiang bendera dan menara pandang di lapangan SMPN 2 Bojonggede.',
+                        image: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600',
+                        date: '17 Okt 2026',
+                        author: 'Humas Kanesvara',
+                        category: 'Latihan Rutin'
+                    }
+                ],
+
+                adminUsers: [
+                    { id: 1, name: 'Kak Admin Kanesvara', email: 'admin@smpn2bojonggede.sch.id', role: 'Super Admin' },
+                    { id: 2, name: 'Kak Pembina Utama', email: 'pembina.kanesvara@smpn2bojonggede.sch.id', role: 'Ketua' },
+                    { id: 3, name: 'Kak Tim Humas', email: 'humas.kanesvara@smpn2bojonggede.sch.id', role: 'Humas' },
+                    { id: 4, name: 'Muhammad Rizky', email: 'rizky.kanesvara@gmail.com', role: 'Anggota' },
+                    { id: 5, name: 'Bpk. Gunawan', email: 'gunawan.parent@gmail.com', role: 'Orang Tua' }
+                ],
+
+                activities: [
+                    { id: 1, code: 'KNS-001', title: 'Persami Kanesvara 2026', location: 'Lapangan SMPN 2 Bojonggede', date: '07-08 Nov 2026', status: 'Terjadwal' },
+                    { id: 2, code: 'KNS-002', title: 'Latihan Menembak & Sandi Morse', location: 'Sanggar Kanesvara', date: '24 Okt 2026', status: 'Selesai' }
+                ],
+
+                parentGallery: [
+                    { id: 1, url: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=300', caption: 'Latihan Pioneering' },
+                    { id: 2, url: 'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=300', caption: 'Upacara Pembukaan Jumat' }
+                ],
+
+                // Form State for Quick Poster
+                newPost: {
+                    title: '',
+                    description: '',
+                    imagePreview: null
+                },
+
+                // Functions
+                switchRole(roleId) {
+                    this.currentRole = roleId;
+                    this.activeTab = 'main';
+                    this.showToast('Peran Diganti', 'Anda sekarang mensimulasikan peran ' + this.rolesList.find(r=>r.id===roleId).name, 'success');
+                },
+
+                showToast(title, message, type = 'success') {
+                    this.toast.title = title;
+                    this.toast.message = message;
+                    this.toast.type = type;
+                    this.toast.show = true;
+                    setTimeout(() => { this.toast.show = false; }, 4000);
+                },
+
+                handleImageUpload(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        this.newPost.imagePreview = URL.createObjectURL(file);
+                    }
+                },
+
+                publishPoster() {
+                    if (!this.newPost.title || !this.newPost.description) return;
+
+                    const newEntry = {
+                        id: Date.now(),
+                        title: this.newPost.title,
+                        description: this.newPost.description,
+                        image: this.newPost.imagePreview || 'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=600',
+                        date: 'Hari Ini',
+                        author: 'Humas Kanesvara',
+                        category: 'Quick Poster'
+                    };
+
+                    this.posts.unshift(newEntry);
+                    this.newPost.title = '';
+                    this.newPost.description = '';
+                    this.newPost.imagePreview = null;
+
+                    this.showToast('Poster Terbit Real-time!', 'Poster Kanesvara Anda telah diterbitkan ke Portal Publik.', 'success');
+                },
+
+                syncGoogleSheets() {
+                    this.lastSyncTime = new Date().toLocaleTimeString('id-ID');
+                    this.showToast('Google Sheets Synced', 'Log presensi & kegiatan Kanesvara SMPN 2 Bojonggede tersinkronisasi.', 'success');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
