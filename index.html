@@ -41,7 +41,6 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
-        /* Mobile scrollbar cleanup */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -49,7 +48,6 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-        /* Active Bottom Nav Indicator */
         .bottom-nav-item.active {
             color: #ec4899;
             font-weight: 800;
@@ -62,442 +60,657 @@
 </head>
 <body class="min-h-screen flex flex-col text-slate-800 pb-20 md:pb-0 antialiased selection:bg-pink-200 selection:text-pink-900">
 
-    <!-- Top Announcement Bar (Solid Pink) -->
-    <div class="bg-kanesvara-pinkDark text-white text-[11px] sm:text-xs py-2 px-4 shadow-sm">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-2 truncate">
-                <span class="bg-white text-kanesvara-pinkDark font-black px-2 py-0.5 rounded text-[10px] uppercase tracking-wider shrink-0">GARUMA</span>
-                <span class="truncate font-semibold">Satria Garuda (Putra) & Matahari Senja (Putri)</span>
-            </div>
-            <div class="hidden md:flex items-center gap-4 text-xs font-semibold shrink-0">
-                <span><i class="fa-solid fa-school text-pink-200 mr-1"></i> SMPN 2 Bojonggede</span>
-                <span class="bg-white/20 text-white px-2 py-0.5 rounded"><i class="fa-solid fa-certificate text-amber-300 mr-1"></i> Gudep 14.213 - 14.214</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Navigation Bar Header (Solid Blue) -->
-    <header class="sticky top-0 z-40 bg-kanesvara-blueDark text-white shadow-md border-b-2 border-kanesvara-bluePrimary">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 sm:h-20">
-                
-                <!-- Logo & Brand Title -->
-                <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('kanesvara')">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-kanesvara-pinkPrimary flex items-center justify-center shadow-sm shrink-0">
-                        <i class="fa-solid fa-compass text-xl sm:text-2xl text-white"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-1.5">
-                            <h1 class="font-heading text-lg sm:text-2xl font-black tracking-tight text-white leading-none">
-                                KANESVARA
-                            </h1>
-                            <span class="text-[10px] sm:text-xs bg-white text-kanesvara-blueDark px-2 py-0.5 rounded-full font-black">214</span>
-                        </div>
-                        <p class="text-[10px] sm:text-xs text-blue-200 font-medium tracking-wide mt-0.5">SMPN 2 BOJONGGEDE</p>
-                    </div>
-                </div>
-
-                <!-- Desktop Navigation Tabs -->
-                <nav class="hidden md:flex space-x-1.5 bg-blue-950 p-1.5 rounded-2xl">
-                    <button id="nav-kanesvara" onclick="switchTab('kanesvara')" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs lg:text-sm transition-all duration-200 flex items-center gap-2 min-h-[44px]">
-                        <i class="fa-solid fa-shield-halved"></i> KANESVARA214
-                    </button>
-                    <button id="nav-news" onclick="switchTab('news')" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs lg:text-sm transition-all duration-200 flex items-center gap-2 min-h-[44px]">
-                        <i class="fa-solid fa-newspaper"></i> KANESVARA NEWS
-                    </button>
-                    <button id="nav-sigma" onclick="switchTab('sigma')" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs lg:text-sm transition-all duration-200 flex items-center gap-2 min-h-[44px]">
-                        <i class="fa-solid fa-trophy text-amber-300"></i> HELLO SIGMA
-                    </button>
-                </nav>
-
-                <!-- Mobile Menu Button Hamburger -->
-                <div class="flex md:hidden items-center gap-2">
-                    <button onclick="toggleHumasForm()" class="p-2.5 rounded-xl bg-kanesvara-pinkPrimary text-white font-bold text-xs flex items-center gap-1.5 active:scale-95 transition min-h-[44px] min-w-[44px]">
-                        <i class="fa-solid fa-plus text-sm"></i>
-                        <span class="text-[11px]">Humas</span>
-                    </button>
-                    <button id="mobile-menu-btn" onclick="toggleMobileDrawer()" class="text-white p-2.5 rounded-xl bg-kanesvara-bluePrimary active:bg-blue-700 min-h-[44px] min-w-[44px] flex items-center justify-center">
-                        <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Mobile Navigation Drawer Overlay -->
-    <div id="drawer-overlay" onclick="toggleMobileDrawer()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden md:hidden transition-opacity"></div>
-    <div id="mobile-drawer" class="fixed top-0 right-0 bottom-0 w-4/5 max-w-xs bg-kanesvara-blueDark text-white z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between p-5 shadow-2xl">
-        <div>
-            <div class="flex items-center justify-between pb-4 mb-6 border-b border-blue-800">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-lg bg-kanesvara-pinkPrimary text-white flex items-center justify-center font-black">K</div>
-                    <span class="font-heading font-black text-sm text-white">KANESVARA 214</span>
-                </div>
-                <button onclick="toggleMobileDrawer()" class="w-10 h-10 rounded-xl bg-blue-900 text-slate-300 flex items-center justify-center text-lg active:scale-95">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-
-            <p class="text-[11px] text-blue-200 font-semibold uppercase tracking-wider mb-3">Menu Utama</p>
-            <div class="space-y-2">
-                <button onclick="switchTab('kanesvara'); toggleMobileDrawer()" class="w-full text-left px-4 py-3.5 rounded-xl font-bold text-xs text-white bg-kanesvara-bluePrimary flex items-center gap-3 active:scale-98 min-h-[44px]">
-                    <i class="fa-solid fa-shield-halved text-base w-5 text-center"></i> KANESVARA214
-                </button>
-                <button onclick="switchTab('news'); toggleMobileDrawer()" class="w-full text-left px-4 py-3.5 rounded-xl font-bold text-xs text-white bg-kanesvara-pinkPrimary flex items-center gap-3 active:scale-98 min-h-[44px]">
-                    <i class="fa-solid fa-newspaper text-base w-5 text-center"></i> KANESVARA NEWS / INFO
-                </button>
-                <button onclick="switchTab('sigma'); toggleMobileDrawer()" class="w-full text-left px-4 py-3.5 rounded-xl font-bold text-xs text-white bg-blue-800 flex items-center gap-3 active:scale-98 min-h-[44px]">
-                    <i class="fa-solid fa-trophy text-amber-300 text-base w-5 text-center"></i> HELLO SIGMA 2027
-                </button>
-            </div>
-        </div>
-
-        <div class="pt-4 border-t border-blue-800">
-            <div class="p-3.5 rounded-2xl bg-blue-950 text-xs">
-                <p class="font-bold text-white mb-1">SMPN 2 Bojonggede</p>
-                <p class="text-[11px] text-blue-300">Gudep 14.213 - 14.214</p>
-                <p class="text-[10px] text-pink-300 font-semibold mt-2">Satria Garuda & Matahari Senja</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- MAIN CONTENT AREA -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
-
-        <!-- ==================== PAGE 1: KANESVARA214 ==================== -->
-        <section id="page-kanesvara" class="tab-content transition-all duration-200">
+    <!-- ==================== GATE 1: LOGIN / REGISTER MODAL OVERLAY (Initial Screen) ==================== -->
+    <div id="login-modal-overlay" class="fixed inset-0 bg-kanesvara-blueDark z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-kanesvara-pinkPrimary my-auto">
             
-            <!-- Mobile First Hero Banner (Solid Blue) -->
-            <div class="rounded-3xl bg-kanesvara-blueDark text-white p-5 sm:p-10 shadow-md mb-6 border-b-4 border-kanesvara-pinkPrimary">
-                <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
-                    <div class="text-left w-full lg:max-w-2xl">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-kanesvara-pinkPrimary text-white text-[11px] sm:text-xs font-bold mb-3 shadow-sm">
-                            <i class="fa-solid fa-campground"></i> GERAKAN PRAMUKA SMPN 2 BOJONGGEDE
-                        </div>
-                        <h2 class="font-heading text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-3">
-                            Pramuka KANESVARA 214
-                        </h2>
-                        <p class="text-blue-100 text-xs sm:text-base leading-relaxed mb-5">
-                            Pusat kegiatan ekstrakurikuler Pramuka <span class="font-bold text-white">SMPN 2 Bojonggede</span>. Wadah pembinaan dua regu utama: <span class="font-bold text-amber-300">Satria Garuda (Putra)</span> & <span class="font-bold text-pink-300">Matahari Senja (Putri)</span> — disingkat <span class="font-bold text-white bg-kanesvara-pinkPrimary px-2 py-0.5 rounded text-xs">GARUMA</span>.
-                        </p>
-
-                        <div class="flex flex-col sm:flex-row gap-2.5">
-                            <button onclick="scrollToId('section-pembina')" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-kanesvara-pinkPrimary hover:bg-kanesvara-pinkDark text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-2 min-h-[44px]">
-                                <i class="fa-solid fa-users"></i> Profil & Pembina
-                            </button>
-                            <button onclick="scrollToId('section-prestasi')" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-kanesvara-bluePrimary hover:bg-blue-600 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-2 min-h-[44px]">
-                                <i class="fa-solid fa-trophy"></i> Prestasi & Jalur PPDB
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Regu Card Highlight (Solid Pink) -->
-                    <div class="w-full lg:w-auto shrink-0 mt-2 lg:mt-0">
-                        <div class="bg-kanesvara-pinkPrimary p-5 rounded-2xl text-center text-white shadow-md">
-                            <div class="flex justify-center gap-3 mb-2">
-                                <div class="w-12 h-12 rounded-xl bg-kanesvara-blueDark flex items-center justify-center shadow-sm">
-                                    <i class="fa-solid fa-feather-pointed text-xl text-white"></i>
-                                </div>
-                                <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm">
-                                    <i class="fa-solid fa-sun text-xl text-kanesvara-pinkPrimary"></i>
-                                </div>
-                            </div>
-                            <h3 class="font-heading font-black text-xl text-white">GARUMA</h3>
-                            <p class="text-[11px] text-pink-100 font-medium">Satria Garuda & Matahari Senja</p>
-                            <span class="mt-2 inline-block bg-white text-kanesvara-pinkDark font-bold text-[10px] px-3 py-1 rounded-full uppercase">Gudep 14.213 - 14.214</span>
-                        </div>
-                    </div>
+            <!-- Header Brand -->
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 mx-auto rounded-2xl bg-kanesvara-pinkPrimary text-white flex items-center justify-center text-3xl mb-3 shadow-md">
+                    <i class="fa-solid fa-compass"></i>
+                </div>
+                <h1 class="font-heading font-black text-2xl text-slate-900 leading-tight">PRAMUKA KANESVARA</h1>
+                <p class="text-xs text-kanesvara-bluePrimary font-bold uppercase mt-1">SMPN 2 Bojonggede — Gudep 14.213 - 14.214</p>
+                <div class="mt-2 inline-block bg-kanesvara-pinkLight text-kanesvara-pinkDark font-extrabold text-[10px] px-3 py-1 rounded-full border border-pink-200">
+                    Regu Satria Garuda & Matahari Senja (GARUMA)
                 </div>
             </div>
 
-            <!-- Horizontal Scrollable Quick Menu Chips for Mobile -->
-            <div class="flex items-center gap-2 overflow-x-auto pb-3 mb-6 no-scrollbar -mx-3 px-3">
-                <button onclick="scrollToId('section-profil')" class="shrink-0 px-4 py-2.5 rounded-xl bg-white text-slate-700 font-bold text-xs border border-slate-200 active:bg-blue-50 flex items-center gap-2 shadow-sm min-h-[44px]">
-                    <i class="fa-solid fa-building-columns text-kanesvara-bluePrimary"></i> Profil
+            <!-- Login Selector Tabs -->
+            <div class="flex bg-slate-100 p-1 rounded-2xl mb-5">
+                <button id="tab-login-btn" onclick="toggleAuthMode('login')" class="flex-1 py-2.5 rounded-xl font-bold text-xs text-white bg-kanesvara-bluePrimary transition shadow-sm min-h-[44px]">
+                    Masuk Akun
                 </button>
-                <button onclick="scrollToId('section-pembina')" class="shrink-0 px-4 py-2.5 rounded-xl bg-white text-slate-700 font-bold text-xs border border-slate-200 active:bg-pink-50 flex items-center gap-2 shadow-sm min-h-[44px]">
-                    <i class="fa-solid fa-user-tie text-kanesvara-pinkPrimary"></i> Pembina
-                </button>
-                <button onclick="scrollToId('section-purna')" class="shrink-0 px-4 py-2.5 rounded-xl bg-white text-slate-700 font-bold text-xs border border-slate-200 active:bg-blue-50 flex items-center gap-2 shadow-sm min-h-[44px]">
-                    <i class="fa-solid fa-user-graduate text-kanesvara-bluePrimary"></i> Purna
-                </button>
-                <button onclick="scrollToId('section-dewan')" class="shrink-0 px-4 py-2.5 rounded-xl bg-white text-slate-700 font-bold text-xs border border-slate-200 active:bg-pink-50 flex items-center gap-2 shadow-sm min-h-[44px]">
-                    <i class="fa-solid fa-users-gear text-kanesvara-pinkPrimary"></i> Dewan Penggalang
-                </button>
-                <button onclick="scrollToId('section-prestasi')" class="shrink-0 px-4 py-2.5 rounded-xl bg-white text-slate-700 font-bold text-xs border border-slate-200 active:bg-blue-50 flex items-center gap-2 shadow-sm min-h-[44px]">
-                    <i class="fa-solid fa-award text-kanesvara-bluePrimary"></i> Prestasi
+                <button id="tab-register-btn" onclick="toggleAuthMode('register')" class="flex-1 py-2.5 rounded-xl font-bold text-xs text-slate-600 hover:text-slate-900 transition min-h-[44px]">
+                    Daftar Baru
                 </button>
             </div>
 
-            <!-- SECTIONS STACK -->
-            <div class="space-y-6">
-
-                <!-- Profil Section -->
-                <div id="section-profil" class="bg-white rounded-2xl p-5 sm:p-7 shadow-sm border border-slate-200">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-9 h-9 rounded-xl bg-kanesvara-bluePrimary text-white flex items-center justify-center font-bold shrink-0">
-                            <i class="fa-solid fa-shield-halved"></i>
-                        </div>
-                        <h3 class="font-heading font-bold text-lg sm:text-xl text-slate-900">Gerakan Pramuka SMPN 2 Bojonggede</h3>
+            <!-- Form LOGIN -->
+            <form id="auth-login-form" onsubmit="handleAuthLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Username / Akun</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="text" id="login-username" required placeholder="Masukkan username anda" class="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs text-slate-800 focus:outline-none focus:border-kanesvara-bluePrimary min-h-[44px]">
                     </div>
-                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
-                        Gugus Depan **14.213 - 14.214** berpusat di <span class="font-bold text-kanesvara-bluePrimary">SMPN 2 Bojonggede</span>, mendidik penggalang yang tangkas, disiplin, berakhlak mulia, serta siap berprestasi.
-                    </p>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Kata Sandi (Password)</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="password" id="login-password" required placeholder="Masukkan kata sandi anda" class="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs text-slate-800 focus:outline-none focus:border-kanesvara-bluePrimary min-h-[44px]">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3 rounded-xl bg-kanesvara-pinkPrimary hover:bg-kanesvara-pinkDark text-white font-bold text-xs transition shadow-md flex items-center justify-center gap-2 min-h-[44px]">
+                    <i class="fa-solid fa-right-to-bracket text-sm"></i> Masuk Sekarang
+                </button>
+            </form>
+
+            <!-- Form REGISTER -->
+            <form id="auth-register-form" onsubmit="handleAuthRegister(event)" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Nama Lengkap / Regu</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-id-card absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="text" id="reg-fullname" required placeholder="Contoh: Pratama Satria Garuda" class="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs text-slate-800 focus:outline-none focus:border-kanesvara-bluePrimary min-h-[44px]">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Username Baru</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-user-plus absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="text" id="reg-username" required placeholder="Buat username unik" class="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs text-slate-800 focus:outline-none focus:border-kanesvara-bluePrimary min-h-[44px]">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Password Baru</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="password" id="reg-password" required placeholder="Minimal 4 karakter" class="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs text-slate-800 focus:outline-none focus:border-kanesvara-bluePrimary min-h-[44px]">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3 rounded-xl bg-kanesvara-bluePrimary hover:bg-kanesvara-blueActive text-white font-bold text-xs transition shadow-md flex items-center justify-center gap-2 min-h-[44px]">
+                    <i class="fa-solid fa-user-check text-sm"></i> Buat Akun & Masuk
+                </button>
+            </form>
+
+            <div class="mt-4 pt-4 border-t border-slate-200 text-center">
+                <button onclick="continueAsGuest()" class="text-xs font-bold text-slate-500 hover:text-slate-800 underline">
+                    Masuk Sebagai Tamu (Pengunjung Umum)
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== MAIN APPLICATION CONTENT ==================== -->
+    <div id="main-app-wrapper" class="hidden flex-col min-h-screen">
+        
+        <!-- Top Announcement Bar (Solid Pink) -->
+        <div class="bg-kanesvara-pinkDark text-white text-[11px] sm:text-xs py-2 px-4 shadow-sm">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <div class="flex items-center gap-2 truncate">
+                    <span class="bg-white text-kanesvara-pinkDark font-black px-2 py-0.5 rounded text-[10px] uppercase tracking-wider shrink-0">GARUMA</span>
+                    <span class="truncate font-semibold">Satria Garuda (Putra) & Matahari Senja (Putri)</span>
+                </div>
+                <div class="flex items-center gap-3 text-xs font-semibold shrink-0">
+                    <span id="user-badge" class="bg-white text-kanesvara-blueDark px-2.5 py-0.5 rounded-full font-bold text-[10px]">Tamu</span>
+                    <button onclick="handleLogout()" class="bg-pink-900 hover:bg-slate-900 text-white px-2.5 py-0.5 rounded text-[10px] font-bold">
+                        <i class="fa-solid fa-right-from-bracket mr-1"></i> Keluar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation Bar Header (Solid Blue) -->
+        <header class="sticky top-0 z-40 bg-kanesvara-blueDark text-white shadow-md border-b-2 border-kanesvara-bluePrimary">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16 sm:h-20">
                     
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div class="p-4 rounded-xl bg-kanesvara-blueLight border-2 border-blue-200">
-                            <div class="flex items-center gap-2 mb-1.5">
-                                <i class="fa-solid fa-feather-pointed text-kanesvara-bluePrimary text-base"></i>
-                                <h4 class="font-bold text-xs text-kanesvara-blueDark">Satria Garuda (Putra)</h4>
-                            </div>
-                            <p class="text-[11px] text-slate-600">Simbol keberanian, kedisiplinan, dan jiwa tangguh anggota penggalang putra.</p>
+                    <!-- Logo & Brand Title -->
+                    <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('kanesvara')">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-kanesvara-pinkPrimary flex items-center justify-center shadow-sm shrink-0">
+                            <i class="fa-solid fa-compass text-xl sm:text-2xl text-white"></i>
                         </div>
-                        <div class="p-4 rounded-xl bg-kanesvara-pinkLight border-2 border-pink-200">
-                            <div class="flex items-center gap-2 mb-1.5">
-                                <i class="fa-solid fa-sun text-kanesvara-pinkPrimary text-base"></i>
-                                <h4 class="font-bold text-xs text-kanesvara-pinkDark">Matahari Senja (Putri)</h4>
+                        <div>
+                            <div class="flex items-center gap-1.5">
+                                <h1 class="font-heading text-lg sm:text-2xl font-black tracking-tight text-white leading-none">
+                                    KANESVARA
+                                </h1>
+                                <span class="text-[10px] sm:text-xs bg-white text-kanesvara-blueDark px-2 py-0.5 rounded-full font-black">214</span>
                             </div>
-                            <p class="text-[11px] text-slate-600">Simbol kehangatan, keanggunan, serta keteguhan jiwa anggota penggalang putri.</p>
+                            <p class="text-[10px] sm:text-xs text-blue-200 font-medium tracking-wide mt-0.5">SMPN 2 BOJONGGEDE</p>
+                        </div>
+                    </div>
+
+                    <!-- Desktop Navigation Tabs -->
+                    <nav class="hidden md:flex space-x-1.5 bg-blue-950 p-1.5 rounded-2xl">
+                        <button id="nav-kanesvara" onclick="switchTab('kanesvara')" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs lg:text-sm transition-all duration-200 flex items-center gap-2 min-h-[44px]">
+                            <i class="fa-solid fa-shield-halved"></i> KANESVARA214
+                        </button>
+                        <button id="nav-news" onclick="switchTab('news')" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs lg:text-sm transition-all duration-200 flex items-center gap-2 min-h-[44px]">
+                            <i class="fa-solid fa-newspaper"></i> KANESVARA NEWS
+                        </button>
+                        <button id="nav-sigma" onclick="switchTab('sigma')" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-xs lg:text-sm transition-all duration-200 flex items-center gap-2 min-h-[44px]">
+                            <i class="fa-solid fa-trophy text-amber-300"></i> HELLO SIGMA
+                        </button>
+
+                        <!-- Tab Khusus Humas (Sembunyi dari Publik) -->
+                        <button id="nav-humas-portal" onclick="switchTab('humas-portal')" class="tab-btn hidden px-4 py-2.5 rounded-xl font-bold text-xs lg:text-sm bg-kanesvara-pinkPrimary text-white shadow-sm flex items-center gap-2 min-h-[44px]">
+                            <i class="fa-solid fa-bullhorn"></i> PORTAL HUMAS
+                        </button>
+
+                        <!-- Tab Khusus Admin -->
+                        <button id="nav-admin" onclick="switchTab('admin')" class="tab-btn hidden px-4 py-2.5 rounded-xl font-bold text-xs lg:text-sm bg-amber-500 text-slate-900 shadow-sm flex items-center gap-2 min-h-[44px]">
+                            <i class="fa-solid fa-user-shield"></i> DASHBOARD ADMIN
+                        </button>
+                    </nav>
+
+                    <!-- Mobile Navigation Controls -->
+                    <div class="flex md:hidden items-center gap-2">
+                        <button id="mobile-humas-btn" onclick="toggleHumasForm()" class="hidden p-2.5 rounded-xl bg-kanesvara-pinkPrimary text-white font-bold text-xs flex items-center gap-1.5 active:scale-95 transition min-h-[44px]">
+                            <i class="fa-solid fa-plus text-sm"></i>
+                            <span class="text-[11px]">Upload</span>
+                        </button>
+                        <button id="mobile-menu-btn" onclick="toggleMobileDrawer()" class="text-white p-2.5 rounded-xl bg-kanesvara-bluePrimary active:bg-blue-700 min-h-[44px] min-w-[44px] flex items-center justify-center">
+                            <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Mobile Navigation Drawer Overlay -->
+        <div id="drawer-overlay" onclick="toggleMobileDrawer()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden md:hidden transition-opacity"></div>
+        <div id="mobile-drawer" class="fixed top-0 right-0 bottom-0 w-4/5 max-w-xs bg-kanesvara-blueDark text-white z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between p-5 shadow-2xl">
+            <div>
+                <div class="flex items-center justify-between pb-4 mb-6 border-b border-blue-800">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-lg bg-kanesvara-pinkPrimary text-white flex items-center justify-center font-black">K</div>
+                        <span class="font-heading font-black text-sm text-white">KANESVARA 214</span>
+                    </div>
+                    <button onclick="toggleMobileDrawer()" class="w-10 h-10 rounded-xl bg-blue-900 text-slate-300 flex items-center justify-center text-lg active:scale-95">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <p class="text-[11px] text-blue-200 font-semibold uppercase tracking-wider mb-3">Menu Utama</p>
+                <div class="space-y-2">
+                    <button onclick="switchTab('kanesvara'); toggleMobileDrawer()" class="w-full text-left px-4 py-3 rounded-xl font-bold text-xs text-white bg-kanesvara-bluePrimary flex items-center gap-3 min-h-[44px]">
+                        <i class="fa-solid fa-shield-halved text-base w-5 text-center"></i> KANESVARA214
+                    </button>
+                    <button onclick="switchTab('news'); toggleMobileDrawer()" class="w-full text-left px-4 py-3 rounded-xl font-bold text-xs text-white bg-kanesvara-pinkPrimary flex items-center gap-3 min-h-[44px]">
+                        <i class="fa-solid fa-newspaper text-base w-5 text-center"></i> KANESVARA NEWS / INFO
+                    </button>
+                    <button onclick="switchTab('sigma'); toggleMobileDrawer()" class="w-full text-left px-4 py-3 rounded-xl font-bold text-xs text-white bg-blue-800 flex items-center gap-3 min-h-[44px]">
+                        <i class="fa-solid fa-trophy text-amber-300 text-base w-5 text-center"></i> HELLO SIGMA 2027
+                    </button>
+
+                    <!-- Mobile Humas / Admin Items -->
+                    <button id="mob-humas-drawer" onclick="switchTab('humas-portal'); toggleMobileDrawer()" class="hidden w-full text-left px-4 py-3 rounded-xl font-bold text-xs text-white bg-kanesvara-pinkDark flex items-center gap-3 min-h-[44px]">
+                        <i class="fa-solid fa-bullhorn text-base w-5 text-center"></i> PORTAL HUMAS (UPLOAD)
+                    </button>
+                    <button id="mob-admin-drawer" onclick="switchTab('admin'); toggleMobileDrawer()" class="hidden w-full text-left px-4 py-3 rounded-xl font-bold text-xs text-slate-900 bg-amber-400 flex items-center gap-3 min-h-[44px]">
+                        <i class="fa-solid fa-user-shield text-base w-5 text-center"></i> DASHBOARD ADMIN
+                    </button>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-blue-800">
+                <div class="p-3.5 rounded-2xl bg-blue-950 text-xs">
+                    <p class="font-bold text-white mb-1">SMPN 2 Bojonggede</p>
+                    <p class="text-[11px] text-blue-300">Gudep 14.213 - 14.214</p>
+                    <p class="text-[10px] text-pink-300 font-semibold mt-1">Pengunjung Web: <span id="drawer-visitor-count" class="font-black text-white">0</span> Orang</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
+
+            <!-- ==================== PAGE 1: KANESVARA214 ==================== -->
+            <section id="page-kanesvara" class="tab-content transition-all duration-200">
+                
+                <!-- Mobile First Hero Banner (Solid Blue) -->
+                <div class="rounded-3xl bg-kanesvara-blueDark text-white p-5 sm:p-10 shadow-md mb-6 border-b-4 border-kanesvara-pinkPrimary">
+                    <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+                        <div class="text-left w-full lg:max-w-2xl">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-kanesvara-pinkPrimary text-white text-[11px] sm:text-xs font-bold mb-3 shadow-sm">
+                                <i class="fa-solid fa-campground"></i> GERAKAN PRAMUKA SMPN 2 BOJONGGEDE
+                            </div>
+                            <h2 class="font-heading text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-3">
+                                Pramuka KANESVARA 214
+                            </h2>
+                            <p class="text-blue-100 text-xs sm:text-base leading-relaxed mb-5">
+                                Pusat kegiatan ekstrakurikuler Pramuka <span class="font-bold text-white">SMPN 2 Bojonggede</span>. Wadah pembinaan dua regu utama: <span class="font-bold text-amber-300">Satria Garuda (Putra)</span> & <span class="font-bold text-pink-300">Matahari Senja (Putri)</span> — disingkat <span class="font-bold text-white bg-kanesvara-pinkPrimary px-2 py-0.5 rounded text-xs">GARUMA</span>.
+                            </p>
+
+                            <div class="flex flex-col sm:flex-row gap-2.5">
+                                <button onclick="scrollToId('section-pembina')" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-kanesvara-pinkPrimary hover:bg-kanesvara-pinkDark text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-2 min-h-[44px]">
+                                    <i class="fa-solid fa-users"></i> Profil & Pembina
+                                </button>
+                                <button onclick="scrollToId('section-prestasi')" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-kanesvara-bluePrimary hover:bg-blue-600 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-2 min-h-[44px]">
+                                    <i class="fa-solid fa-trophy"></i> Prestasi & Jalur PPDB
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Regu Card Highlight (Solid Pink) -->
+                        <div class="w-full lg:w-auto shrink-0 mt-2 lg:mt-0">
+                            <div class="bg-kanesvara-pinkPrimary p-5 rounded-2xl text-center text-white shadow-md">
+                                <div class="flex justify-center gap-3 mb-2">
+                                    <div class="w-12 h-12 rounded-xl bg-kanesvara-blueDark flex items-center justify-center shadow-sm">
+                                        <i class="fa-solid fa-feather-pointed text-xl text-white"></i>
+                                    </div>
+                                    <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm">
+                                        <i class="fa-solid fa-sun text-xl text-kanesvara-pinkPrimary"></i>
+                                    </div>
+                                </div>
+                                <h3 class="font-heading font-black text-xl text-white">GARUMA</h3>
+                                <p class="text-[11px] text-pink-100 font-medium">Satria Garuda & Matahari Senja</p>
+                                <span class="mt-2 inline-block bg-white text-kanesvara-pinkDark font-bold text-[10px] px-3 py-1 rounded-full uppercase">Gudep 14.213 - 14.214</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Pembina & Purna Accordions / Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Pembina Card -->
-                    <div id="section-pembina" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
-                        <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
-                            <h3 class="font-heading font-bold text-base text-slate-900 flex items-center gap-2">
-                                <i class="fa-solid fa-user-shield text-kanesvara-bluePrimary"></i> Pembina Pramuka
-                            </h3>
-                            <span class="text-[10px] font-bold px-2.5 py-1 bg-kanesvara-bluePrimary text-white rounded-full">Aktif</span>
+                <!-- SECTIONS STACK -->
+                <div class="space-y-6">
+
+                    <!-- Profil Section -->
+                    <div id="section-profil" class="bg-white rounded-2xl p-5 sm:p-7 shadow-sm border border-slate-200">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-9 h-9 rounded-xl bg-kanesvara-bluePrimary text-white flex items-center justify-center font-bold shrink-0">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-lg sm:text-xl text-slate-900">Gerakan Pramuka SMPN 2 Bojonggede</h3>
                         </div>
-                        <div class="space-y-3">
-                            <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200">
-                                <div class="w-10 h-10 rounded-xl bg-kanesvara-blueDark text-white flex items-center justify-center font-bold text-xs shrink-0">
-                                    KG
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+                            Gugus Depan **14.213 - 14.214** berpusat di <span class="font-bold text-kanesvara-bluePrimary">SMPN 2 Bojonggede</span>, mendidik penggalang yang tangkas, disiplin, berakhlak mulia, serta siap berprestasi.
+                        </p>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="p-4 rounded-xl bg-kanesvara-blueLight border-2 border-blue-200">
+                                <div class="flex items-center gap-2 mb-1.5">
+                                    <i class="fa-solid fa-feather-pointed text-kanesvara-bluePrimary text-base"></i>
+                                    <h4 class="font-bold text-xs text-kanesvara-blueDark">Satria Garuda (Putra)</h4>
                                 </div>
-                                <div>
-                                    <h4 class="font-bold text-xs text-slate-800">Kak Mabigus & Pembina Utama</h4>
-                                    <p class="text-[11px] text-slate-500">SMPN 2 Bojonggede</p>
-                                    <span class="inline-block text-[9px] font-bold text-white bg-kanesvara-pinkPrimary px-2 py-0.5 rounded mt-1">Pembina Putra & Putri</span>
+                                <p class="text-[11px] text-slate-600">Simbol keberanian, kedisiplinan, dan jiwa tangguh anggota penggalang putra.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-kanesvara-pinkLight border-2 border-pink-200">
+                                <div class="flex items-center gap-2 mb-1.5">
+                                    <i class="fa-solid fa-sun text-kanesvara-pinkPrimary text-base"></i>
+                                    <h4 class="font-bold text-xs text-kanesvara-pinkDark">Matahari Senja (Putri)</h4>
+                                </div>
+                                <p class="text-[11px] text-slate-600">Simbol kehangatan, keanggunan, serta keteguhan jiwa anggota penggalang putri.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pembina & Purna -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div id="section-pembina" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                            <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
+                                <h3 class="font-heading font-bold text-base text-slate-900 flex items-center gap-2">
+                                    <i class="fa-solid fa-user-shield text-kanesvara-bluePrimary"></i> Pembina Pramuka
+                                </h3>
+                                <span class="text-[10px] font-bold px-2.5 py-1 bg-kanesvara-bluePrimary text-white rounded-full">Aktif</span>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200">
+                                    <div class="w-10 h-10 rounded-xl bg-kanesvara-blueDark text-white flex items-center justify-center font-bold text-xs shrink-0">
+                                        KG
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-xs text-slate-800">Kak Mabigus & Pembina Utama</h4>
+                                        <p class="text-[11px] text-slate-500">SMPN 2 Bojonggede</p>
+                                        <span class="inline-block text-[9px] font-bold text-white bg-kanesvara-pinkPrimary px-2 py-0.5 rounded mt-1">Pembina Putra & Putri</span>
+                                    </div>
                                 </div>
                             </div>
-                            <p class="text-[11px] text-slate-500 italic bg-blue-50 p-3 rounded-xl border border-blue-100">
-                                "Membimbing dengan keteladanan, mencetak tunas bangsa berkarakter Garuda di SMPN 2 Bojonggede."
+                        </div>
+
+                        <div id="section-purna" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                            <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
+                                <h3 class="font-heading font-bold text-base text-slate-900 flex items-center gap-2">
+                                    <i class="fa-solid fa-user-graduate text-kanesvara-pinkPrimary"></i> Purna Kanesvara
+                                </h3>
+                                <span class="text-[10px] font-bold px-2.5 py-1 bg-kanesvara-pinkPrimary text-white rounded-full">Alumni</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mb-3 leading-relaxed">
+                                Ikatan alumni penggalang Kanesvara yang senantiasa mendampingi latihan serta mendukung penuh adik-adik penggalang aktif.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-[10px] font-semibold">Purna 2024/2025</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-kanesvara-pinkPrimary text-white text-[10px] font-bold shadow-sm">Purna 2025/2026</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dewan Penggalang -->
+                    <div id="section-dewan" class="bg-white rounded-2xl p-5 sm:p-7 shadow-sm border border-slate-200">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 pb-2 border-b border-slate-100">
+                            <div>
+                                <h3 class="font-heading font-bold text-lg text-slate-900">Dewan Penggalang Masa Bhakti</h3>
+                                <p class="text-[11px] text-slate-500">Pengurus Pasukan Satria Garuda & Matahari Senja</p>
+                            </div>
+                            <span class="self-start sm:self-auto px-3 py-1 rounded-full bg-kanesvara-bluePrimary text-white font-bold text-[10px]">
+                                Masa Bhakti 2026 / 2027
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                            <div class="p-3.5 rounded-xl bg-kanesvara-blueLight border border-blue-200 text-center">
+                                <div class="w-10 h-10 mx-auto rounded-xl bg-kanesvara-bluePrimary text-white flex items-center justify-center font-bold mb-2 text-base shadow-sm">
+                                    <i class="fa-solid fa-crown"></i>
+                                </div>
+                                <h4 class="font-bold text-xs text-slate-800">Pratama Putra</h4>
+                                <p class="text-[10px] text-kanesvara-bluePrimary font-semibold">Satria Garuda</p>
+                            </div>
+
+                            <div class="p-3.5 rounded-xl bg-kanesvara-pinkLight border border-pink-200 text-center">
+                                <div class="w-10 h-10 mx-auto rounded-xl bg-kanesvara-pinkPrimary text-white flex items-center justify-center font-bold mb-2 text-base shadow-sm">
+                                    <i class="fa-solid fa-crown"></i>
+                                </div>
+                                <h4 class="font-bold text-xs text-slate-800">Pratama Putri</h4>
+                                <p class="text-[10px] text-kanesvara-pinkPrimary font-semibold">Matahari Senja</p>
+                            </div>
+
+                            <div class="p-3.5 rounded-xl bg-kanesvara-blueLight border border-blue-200 text-center">
+                                <div class="w-10 h-10 mx-auto rounded-xl bg-kanesvara-blueDark text-white flex items-center justify-center font-bold mb-2 text-base shadow-sm">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </div>
+                                <h4 class="font-bold text-xs text-slate-800">Sekretaris</h4>
+                                <p class="text-[10px] text-kanesvara-bluePrimary font-semibold">Kerani Pasukan</p>
+                            </div>
+
+                            <div class="p-3.5 rounded-xl bg-kanesvara-pinkLight border border-pink-200 text-center">
+                                <div class="w-10 h-10 mx-auto rounded-xl bg-kanesvara-pinkDark text-white flex items-center justify-center font-bold mb-2 text-base shadow-sm">
+                                    <i class="fa-solid fa-vault"></i>
+                                </div>
+                                <h4 class="font-bold text-xs text-slate-800">Bendahara</h4>
+                                <p class="text-[10px] text-kanesvara-pinkPrimary font-semibold">Juru Uang</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Prestasi & Jalur PPDB -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div id="section-prestasi" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                            <h3 class="font-heading font-bold text-base text-slate-900 mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-trophy text-amber-500"></i> Prestasi Utama Kanesvara
+                            </h3>
+                            <ul class="space-y-2 text-xs text-slate-600">
+                                <li class="flex items-start gap-2.5 p-2.5 rounded-xl bg-blue-50 border border-blue-100">
+                                    <i class="fa-solid fa-star text-amber-500 text-sm mt-0.5 shrink-0"></i>
+                                    <div>
+                                        <span class="font-bold text-slate-800 block">Juara LKB & PASATAMA Scoutition</span>
+                                        <span class="text-[10px] text-kanesvara-bluePrimary font-semibold">Tingkat Kabupaten/Provinsi</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-2.5 p-2.5 rounded-xl bg-pink-50 border border-pink-100">
+                                    <i class="fa-solid fa-star text-amber-500 text-sm mt-0.5 shrink-0"></i>
+                                    <div>
+                                        <span class="font-bold text-slate-800 block">Kontingen Lomba Tingkat IV (LT IV)</span>
+                                        <span class="text-[10px] text-kanesvara-pinkPrimary font-semibold">Wakil Penggalang Garuda Daerah</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div id="section-jalur" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                            <h3 class="font-heading font-bold text-base text-slate-900 mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-graduation-cap text-kanesvara-pinkPrimary"></i> Jalur Prestasi PPDB
+                            </h3>
+                            <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                                Sertifikat & Piagam Penghargaan Pramuka Kanesvara SMPN 2 Bojonggede terdaftar resmi untuk pendaftaran jenjang SMA/SMK Negeri jalur non-akademik.
                             </p>
                         </div>
                     </div>
 
-                    <!-- Purna Card -->
-                    <div id="section-purna" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
-                        <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
-                            <h3 class="font-heading font-bold text-base text-slate-900 flex items-center gap-2">
-                                <i class="fa-solid fa-user-graduate text-kanesvara-pinkPrimary"></i> Purna Kanesvara
-                            </h3>
-                            <span class="text-[10px] font-bold px-2.5 py-1 bg-kanesvara-pinkPrimary text-white rounded-full">Alumni</span>
-                        </div>
-                        <p class="text-xs text-slate-600 mb-3 leading-relaxed">
-                            Ikatan alumni penggalang Kanesvara yang senantiasa mendampingi latihan serta mendukung penuh adik-adik penggalang aktif.
-                        </p>
-                        <div class="flex flex-wrap gap-1.5">
-                            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-[10px] font-semibold">Purna 2022/2023</span>
-                            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-[10px] font-semibold">Purna 2023/2024</span>
-                            <span class="px-2.5 py-1 rounded-lg bg-pink-50 text-kanesvara-pinkDark text-[10px] font-semibold border border-pink-200">Purna 2024/2025</span>
-                            <span class="px-2.5 py-1 rounded-lg bg-kanesvara-pinkPrimary text-white text-[10px] font-bold shadow-sm">Purna 2025/2026</span>
+                    <!-- Contact Us Section -->
+                    <div id="section-contact" class="bg-white rounded-2xl p-5 sm:p-7 shadow-sm border border-slate-200 text-center">
+                        <h3 class="font-heading font-bold text-lg text-slate-900 mb-1">Contact Us Kanesvara 214</h3>
+                        <p class="text-xs text-slate-500 mb-4">Informasi latihan & undangan lomba SMPN 2 Bojonggede</p>
+                        <div class="flex flex-col sm:flex-row justify-center gap-2">
+                            <a href="https://wa.me/6281234567890" target="_blank" class="px-4 py-3 rounded-xl bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition flex items-center justify-center gap-2 min-h-[44px]">
+                                <i class="fa-brands fa-whatsapp text-base"></i> WhatsApp Humas
+                            </a>
+                            <a href="https://instagram.com" target="_blank" class="px-4 py-3 rounded-xl bg-kanesvara-pinkPrimary text-white font-bold text-xs hover:bg-kanesvara-pinkDark transition flex items-center justify-center gap-2 min-h-[44px]">
+                                <i class="fa-brands fa-instagram text-base"></i> @kanesvara214
+                            </a>
                         </div>
                     </div>
-                </div>
 
-                <!-- Dewan Penggalang Masa Bhakti -->
-                <div id="section-dewan" class="bg-white rounded-2xl p-5 sm:p-7 shadow-sm border border-slate-200">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 pb-2 border-b border-slate-100">
+                </div>
+            </section>
+
+
+            <!-- ==================== PAGE 2: KANESVARA NEWS/INFO (Public Feed) ==================== -->
+            <section id="page-news" class="tab-content hidden transition-all duration-200">
+                
+                <!-- News Header -->
+                <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200 mb-5">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div>
-                            <h3 class="font-heading font-bold text-lg text-slate-900">Dewan Penggalang Masa Bhakti</h3>
-                            <p class="text-[11px] text-slate-500">Pengurus Pasukan Satria Garuda & Matahari Senja</p>
+                            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-kanesvara-pinkPrimary text-white text-[10px] font-bold mb-1">
+                                <i class="fa-solid fa-bullhorn"></i> HUMAS & INFORMASI
+                            </div>
+                            <h2 class="font-heading text-xl sm:text-2xl font-black text-slate-900">Kanesvara News</h2>
+                            <p class="text-xs text-slate-500">Kabar kegiatan Satria Garuda & Matahari Senja SMPN 2 Bojonggede</p>
                         </div>
-                        <span class="self-start sm:self-auto px-3 py-1 rounded-full bg-kanesvara-bluePrimary text-white font-bold text-[10px]">
-                            Masa Bhakti 2026 / 2027
-                        </span>
+
+                        <!-- Humas Upload Trigger (visible if logged in as Humas/Admin) -->
+                        <button id="humas-upload-btn-header" onclick="toggleHumasForm()" class="hidden px-4 py-2.5 rounded-xl bg-kanesvara-pinkPrimary hover:bg-kanesvara-pinkDark text-white font-bold text-xs shadow-sm transition items-center gap-2 min-h-[44px]">
+                            <i class="fa-solid fa-circle-plus text-base"></i> Upload Berita Humas
+                        </button>
                     </div>
 
-                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                        <div class="p-3.5 rounded-xl bg-kanesvara-blueLight border border-blue-200 text-center">
-                            <div class="w-10 h-10 mx-auto rounded-xl bg-kanesvara-bluePrimary text-white flex items-center justify-center font-bold mb-2 text-base shadow-sm">
-                                <i class="fa-solid fa-crown"></i>
-                            </div>
-                            <h4 class="font-bold text-xs text-slate-800">Pratama Putra</h4>
-                            <p class="text-[10px] text-kanesvara-bluePrimary font-semibold">Satria Garuda</p>
+                    <!-- Search Bar & Filter Chips -->
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex flex-col gap-3">
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                            <input type="text" id="news-search" oninput="handleSearchNews()" placeholder="Cari berita atau kegiatan (misal: Jamnas, LT II)..." class="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-kanesvara-bluePrimary min-h-[44px]">
                         </div>
 
-                        <div class="p-3.5 rounded-xl bg-kanesvara-pinkLight border border-pink-200 text-center">
-                            <div class="w-10 h-10 mx-auto rounded-xl bg-kanesvara-pinkPrimary text-white flex items-center justify-center font-bold mb-2 text-base shadow-sm">
-                                <i class="fa-solid fa-crown"></i>
-                            </div>
-                            <h4 class="font-bold text-xs text-slate-800">Pratama Putri</h4>
-                            <p class="text-[10px] text-kanesvara-pinkPrimary font-semibold">Matahari Senja</p>
-                        </div>
-
-                        <div class="p-3.5 rounded-xl bg-kanesvara-blueLight border border-blue-200 text-center">
-                            <div class="w-10 h-10 mx-auto rounded-xl bg-kanesvara-blueDark text-white flex items-center justify-center font-bold mb-2 text-base shadow-sm">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </div>
-                            <h4 class="font-bold text-xs text-slate-800">Sekretaris</h4>
-                            <p class="text-[10px] text-kanesvara-bluePrimary font-semibold">Kerani Pasukan</p>
-                        </div>
-
-                        <div class="p-3.5 rounded-xl bg-kanesvara-pinkLight border border-pink-200 text-center">
-                            <div class="w-10 h-10 mx-auto rounded-xl bg-kanesvara-pinkDark text-white flex items-center justify-center font-bold mb-2 text-base shadow-sm">
-                                <i class="fa-solid fa-vault"></i>
-                            </div>
-                            <h4 class="font-bold text-xs text-slate-800">Bendahara</h4>
-                            <p class="text-[10px] text-kanesvara-pinkPrimary font-semibold">Juru Uang</p>
+                        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
+                            <button onclick="filterNews('all', this)" class="news-filter-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-kanesvara-bluePrimary text-white shadow-sm min-h-[38px]">
+                                Semua Berita
+                            </button>
+                            <button onclick="filterNews('Lomba & Kejuaraan', this)" class="news-filter-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 min-h-[38px]">
+                                Lomba & LT
+                            </button>
+                            <button onclick="filterNews('Giat Ramadhan', this)" class="news-filter-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 min-h-[38px]">
+                                Giat Ramadhan
+                            </button>
+                            <button onclick="filterNews('Garuma Special', this)" class="news-filter-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 min-h-[38px]">
+                                Garuma Special
+                            </button>
+                            <button onclick="filterNews('Pengumuman Resmi', this)" class="news-filter-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 min-h-[38px]">
+                                Pengumuman
+                            </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Prestasi & Jalur PPDB -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Prestasi Grid -->
-                    <div id="section-prestasi" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
-                        <h3 class="font-heading font-bold text-base text-slate-900 mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-trophy text-amber-500"></i> Prestasi Utama Kanesvara
-                        </h3>
-                        <ul class="space-y-2 text-xs text-slate-600">
-                            <li class="flex items-start gap-2.5 p-2.5 rounded-xl bg-blue-50 border border-blue-100">
-                                <i class="fa-solid fa-star text-amber-500 text-sm mt-0.5 shrink-0"></i>
-                                <div>
-                                    <span class="font-bold text-slate-800 block">Juara LKB & PASATAMA Scoutition</span>
-                                    <span class="text-[10px] text-kanesvara-bluePrimary font-semibold">Tingkat Kabupaten/Provinsi</span>
-                                </div>
-                            </li>
-                            <li class="flex items-start gap-2.5 p-2.5 rounded-xl bg-pink-50 border border-pink-100">
-                                <i class="fa-solid fa-star text-amber-500 text-sm mt-0.5 shrink-0"></i>
-                                <div>
-                                    <span class="font-bold text-slate-800 block">Kontingen Lomba Tingkat IV (LT IV)</span>
-                                    <span class="text-[10px] text-kanesvara-pinkPrimary font-semibold">Wakil Penggalang Garuda Daerah</span>
-                                </div>
-                            </li>
-                            <li class="flex items-start gap-2.5 p-2.5 rounded-xl bg-blue-50 border border-blue-100">
-                                <i class="fa-solid fa-star text-amber-500 text-sm mt-0.5 shrink-0"></i>
-                                <div>
-                                    <span class="font-bold text-slate-800 block">Pelantikan Garuda 18 & Pramuka Teladan</span>
-                                    <span class="text-[10px] text-kanesvara-bluePrimary font-semibold">Penghargaan Tertinggi Penggalang</span>
-                                </div>
-                            </li>
-                        </ul>
+                <!-- News Grid -->
+                <div id="news-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Dynamic JavaScript Cards injected here -->
+                </div>
+            </section>
+
+
+            <!-- ==================== PAGE 3: HELLO SIGMA ==================== -->
+            <section id="page-sigma" class="tab-content hidden transition-all duration-200">
+                
+                <!-- Hero SIGMA 2027 (Solid Dark Blue) -->
+                <div class="rounded-3xl bg-kanesvara-blueDark text-white p-5 sm:p-8 shadow-md mb-6 border-b-4 border-kanesvara-pinkPrimary">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-kanesvara-pinkPrimary text-white text-[10px] font-bold uppercase mb-3">
+                        <i class="fa-solid fa-trophy text-amber-300"></i> SCOUT COMPETITION 2027
+                    </div>
+                    <h2 class="font-heading text-3xl sm:text-5xl font-black text-white leading-tight mb-2">
+                        HELLO SIGMA 2027
+                    </h2>
+                    <p class="text-blue-100 text-xs sm:text-sm mb-5 leading-relaxed">
+                        Ajang Perlombaan Penggalang Bergengsi SD & SMP se-Jawa Barat diselenggarakan oleh Pramuka Kanesvara SMPN 2 Bojonggede.
+                    </p>
+                </div>
+
+                <!-- SIGMA Info Cards Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-kanesvara-pinkPrimary text-white flex items-center justify-center text-lg mb-3">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-base text-slate-900 mb-1">Coming Soon SIGMA 2027</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                                Kompetisi ketangkasan penggalang edisi 2027 dengan piala bergilir dan kategori lomba terbaru.
+                            </p>
+                        </div>
+                        <span class="text-[10px] font-bold text-white bg-kanesvara-pinkPrimary px-3 py-1 rounded-full self-start">Awal Tahun 2027</span>
                     </div>
 
-                    <!-- Jalur PPDB -->
-                    <div id="section-jalur" class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
-                        <h3 class="font-heading font-bold text-base text-slate-900 mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-graduation-cap text-kanesvara-pinkPrimary"></i> Jalur Prestasi PPDB
-                        </h3>
-                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-                            Sertifikat & Piagam Penghargaan Pramuka Kanesvara SMPN 2 Bojonggede terdaftar resmi untuk pendaftaran jenjang SMA/SMK Negeri jalur non-akademik.
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-kanesvara-bluePrimary text-white flex items-center justify-center text-lg mb-3">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-base text-slate-900 mb-1">Tentang SIGMA</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                                Ajang silaturahmi, unjuk kedisiplinan, serta ketangkasan antar regu penggalang di SMPN 2 Bojonggede.
+                            </p>
+                        </div>
+                        <span class="text-[10px] font-bold text-white bg-kanesvara-bluePrimary px-3 py-1 rounded-full self-start">Scout Competition</span>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-kanesvara-pinkPrimary text-white flex items-center justify-center text-lg mb-3">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-base text-slate-900 mb-1">Pencapaian SIGMA</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                                Telah diikuti lebih dari 50+ pangkalan penggalang dari berbagai wilayah kabupaten/kota.
+                            </p>
+                        </div>
+                        <span class="text-[10px] font-bold text-white bg-kanesvara-pinkPrimary px-3 py-1 rounded-full self-start">50+ Pangkalan Peserta</span>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                        <div class="w-10 h-10 rounded-xl bg-kanesvara-bluePrimary text-white flex items-center justify-center text-lg mb-3">
+                            <i class="fa-solid fa-trophy text-amber-300"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-base text-slate-900 mb-1">Pemenang SIGMA (Hall of Fame)</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                            Daftar Pangkalan Penggalang Juara Umum Bergilir edisi kompetisi sebelumnya.
                         </p>
-                        <div class="p-3.5 rounded-xl bg-kanesvara-pinkPrimary text-white shadow-sm flex items-center gap-3">
-                            <i class="fa-solid fa-certificate text-2xl text-white shrink-0"></i>
+                        <button onclick="openModal('modal-halloffame')" class="px-3.5 py-2 rounded-xl bg-kanesvara-blueLight text-kanesvara-blueDark text-xs font-bold hover:bg-blue-100 transition flex items-center gap-1.5 min-h-[44px]">
+                            <i class="fa-solid fa-list-ol"></i> Lihat Daftar Pemenang
+                        </button>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                        <div class="w-10 h-10 rounded-xl bg-kanesvara-pinkPrimary text-white flex items-center justify-center text-lg mb-3">
+                            <i class="fa-solid fa-child"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-base text-slate-900 mb-1">Soon Teknis SD / MI</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                            Petunjuk Teknis (Juknis) mata lomba Penggalang SD: LKBB, Pionering, Sandi, & Semaphore.
+                        </p>
+                        <span class="text-[10px] font-bold text-slate-600 bg-slate-100 px-3 py-1 rounded-full"><i class="fa-solid fa-lock mr-1"></i> Rilis H-30 Event</span>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                        <div class="w-10 h-10 rounded-xl bg-kanesvara-bluePrimary text-white flex items-center justify-center text-lg mb-3">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-base text-slate-900 mb-1">Soon Teknis SMP / MTs</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                            Petunjuk Teknis (Juknis) mata lomba Penggalang SMP: Baris Berbaris & Yel-Yel Kreatif.
+                        </p>
+                        <span class="text-[10px] font-bold text-slate-600 bg-slate-100 px-3 py-1 rounded-full"><i class="fa-solid fa-lock mr-1"></i> Rilis H-30 Event</span>
+                    </div>
+                </div>
+
+                <!-- CP Panitia & Sponsorship -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-kanesvara-blueDark text-white rounded-2xl p-5 shadow-sm">
+                        <div class="flex items-center gap-2.5 mb-3">
+                            <div class="w-9 h-9 rounded-xl bg-kanesvara-bluePrimary text-white flex items-center justify-center font-bold shrink-0">
+                                <i class="fa-solid fa-headset text-sm"></i>
+                            </div>
                             <div>
-                                <h4 class="font-bold text-xs text-white">Sertifikat Resmi Terakreditasi</h4>
-                                <p class="text-[10px] text-pink-100">Disahkan Sekolah & Kwarcab untuk kelulusan</p>
+                                <h3 class="font-heading font-bold text-base text-white">Contact Person Panitia SIGMA</h3>
+                                <p class="text-[11px] text-blue-200">Informasi Pendaftaran & Teknis SIGMA</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Contact Section -->
-                <div id="section-contact" class="bg-white rounded-2xl p-5 sm:p-7 shadow-sm border border-slate-200 text-center">
-                    <h3 class="font-heading font-bold text-lg text-slate-900 mb-1">Hubungi Kanesvara 214</h3>
-                    <p class="text-xs text-slate-500 mb-4">Informasi latihan & undangan lomba SMPN 2 Bojonggede</p>
-                    <div class="flex flex-col sm:flex-row justify-center gap-2">
-                        <a href="https://wa.me/6281234567890" target="_blank" class="px-4 py-3 rounded-xl bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition flex items-center justify-center gap-2 min-h-[44px]">
-                            <i class="fa-brands fa-whatsapp text-base"></i> WhatsApp Humas
-                        </a>
-                        <a href="https://instagram.com" target="_blank" class="px-4 py-3 rounded-xl bg-kanesvara-pinkPrimary text-white font-bold text-xs hover:bg-kanesvara-pinkDark transition flex items-center justify-center gap-2 min-h-[44px]">
-                            <i class="fa-brands fa-instagram text-base"></i> @kanesvara214
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-
-        <!-- ==================== PAGE 2: KANESVARA NEWS/INFO ==================== -->
-        <section id="page-news" class="tab-content hidden transition-all duration-200">
-            
-            <!-- News Header -->
-            <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200 mb-5">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div>
-                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-kanesvara-pinkPrimary text-white text-[10px] font-bold mb-1">
-                            <i class="fa-solid fa-bullhorn"></i> HUMAS & INFORMASI
+                        <div class="space-y-2 mb-2">
+                            <a href="https://wa.me/6281234567891" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-blue-950 border border-blue-800 text-xs text-white hover:bg-blue-900 min-h-[44px]">
+                                <span><i class="fa-solid fa-user text-kanesvara-pinkPrimary mr-2"></i> Ketupat SIGMA</span>
+                                <span class="px-2.5 py-1 rounded bg-emerald-600 font-bold text-[10px]">Chat WA</span>
+                            </a>
                         </div>
-                        <h2 class="font-heading text-xl sm:text-2xl font-black text-slate-900">Kanesvara News</h2>
-                        <p class="text-xs text-slate-500">Kabar kegiatan Satria Garuda & Matahari Senja SMPN 2 Bojonggede</p>
                     </div>
 
-                    <!-- Upload Button Desktop -->
-                    <button onclick="toggleHumasForm()" class="hidden sm:flex px-4 py-2.5 rounded-xl bg-kanesvara-pinkPrimary hover:bg-kanesvara-pinkDark text-white font-bold text-xs shadow-sm transition items-center gap-2 min-h-[44px]">
-                        <i class="fa-solid fa-circle-plus text-base"></i> Upload Berita Humas
-                    </button>
-                </div>
-
-                <!-- Search Bar & Filter Chips -->
-                <div class="mt-4 pt-3 border-t border-slate-100 flex flex-col gap-3">
-                    <div class="relative">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                        <input type="text" id="news-search" oninput="handleSearchNews()" placeholder="Cari berita atau kegiatan (misal: Jamnas, LT II)..." class="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-kanesvara-bluePrimary min-h-[44px]">
-                    </div>
-
-                    <div class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
-                        <button onclick="filterNews('all', this)" class="news-filter-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-kanesvara-bluePrimary text-white shadow-sm min-h-[38px]">
-                            Semua Berita
-                        </button>
-                        <button onclick="filterNews('Lomba & Kejuaraan', this)" class="news-filter-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 min-h-[38px]">
-                            Lomba & LT
-                        </button>
-                        <button onclick="filterNews('Giat Ramadhan', this)" class="news-filter-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 min-h-[38px]">
-                            Giat Ramadhan
-                        </button>
-                        <button onclick="filterNews('Garuma Special', this)" class="news-filter-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 min-h-[38px]">
-                            Garuma Special
-                        </button>
-                        <button onclick="filterNews('Pengumuman Resmi', this)" class="news-filter-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 min-h-[38px]">
-                            Pengumuman
-                        </button>
+                    <div class="bg-kanesvara-pinkDark text-white rounded-2xl p-5 shadow-sm">
+                        <div class="flex items-center gap-2.5 mb-3">
+                            <div class="w-9 h-9 rounded-xl bg-kanesvara-pinkPrimary text-white flex items-center justify-center font-bold shrink-0">
+                                <i class="fa-solid fa-handshake text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-heading font-bold text-base text-white">CP Sponsorship SIGMA</h3>
+                                <p class="text-[11px] text-pink-100">Kerjasama Brand & Media Partner</p>
+                            </div>
+                        </div>
+                        <a href="https://wa.me/6281234567893" target="_blank" class="block w-full py-3 text-center rounded-xl bg-kanesvara-pinkPrimary text-white font-bold text-xs hover:bg-pink-500 transition min-h-[44px] flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-file-contract"></i> Hubungi Tim Sponsorship
+                        </a>
                     </div>
                 </div>
-            </div>
 
-            <!-- HUMAS UPLOAD FORM MODAL CONTAINER (Solid Dark Blue) -->
-            <div id="humas-form-container" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-                <div class="bg-kanesvara-blueDark text-white w-full max-w-lg rounded-2xl p-5 sm:p-6 shadow-2xl relative border-2 border-kanesvara-bluePrimary my-auto">
-                    <button onclick="toggleHumasForm()" class="absolute top-4 right-4 text-slate-300 hover:text-white w-9 h-9 rounded-xl bg-blue-900 flex items-center justify-center text-lg active:scale-95">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
+            </section>
+
+
+            <!-- ==================== PAGE 4: PORTAL HUMAS (Hidden Page for Humas/Admin) ==================== -->
+            <section id="page-humas-portal" class="tab-content hidden transition-all duration-200">
+                <div class="bg-kanesvara-blueDark text-white rounded-3xl p-5 sm:p-8 shadow-md border-4 border-kanesvara-pinkPrimary mb-6">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-10 h-10 rounded-xl bg-kanesvara-pinkPrimary text-white flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-bullhorn"></i>
+                        </div>
+                        <div>
+                            <h2 class="font-heading font-black text-2xl text-white">Portal Khusus Humas Kanesvara</h2>
+                            <p class="text-xs text-blue-200">Upload Berita & Info Publikasi Resmi SMPN 2 Bojonggede</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-200 leading-relaxed mt-2">
+                        Halaman ini hanya dapat diakses oleh akun **Humas** atau **Admin**. Setiap berita yang diunggah akan menampilkan informasi **Nama Akun Humas** dan **Waktu/Tanggal Posting** secara otomatis di Kanesvara News.
+                    </p>
+                </div>
+
+                <!-- Form Upload Portal Humas -->
+                <div class="bg-white rounded-2xl p-5 sm:p-7 shadow-sm border border-slate-200">
+                    <h3 class="font-heading font-bold text-lg text-slate-900 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square text-kanesvara-pinkPrimary"></i> Form Unggah Berita Humas
+                    </h3>
                     
-                    <div class="flex items-center gap-2.5 mb-4">
-                        <div class="w-9 h-9 rounded-xl bg-kanesvara-pinkPrimary text-white flex items-center justify-center font-bold shrink-0">
-                            <i class="fa-solid fa-cloud-arrow-up text-sm"></i>
-                        </div>
+                    <form onsubmit="handleAddNewsPortal(event)" class="space-y-4">
                         <div>
-                            <h3 class="font-heading font-bold text-base text-white">Upload Berita Humas</h3>
-                            <p class="text-[10px] text-blue-200">Otomatis dipublikasikan ke Kanesvara News</p>
-                        </div>
-                    </div>
-
-                    <form id="news-form" onsubmit="handleAddNews(event)" class="space-y-3">
-                        <div>
-                            <label class="block text-[11px] font-semibold text-blue-100 mb-1">Judul Berita / Kegiatan</label>
-                            <input type="text" id="news-title" required placeholder="Contoh: Juara LKB & Pasatama Scoutition" class="w-full px-3.5 py-2.5 rounded-xl bg-blue-950 border border-blue-700 text-white placeholder-blue-300 text-xs focus:outline-none focus:border-kanesvara-pinkPrimary min-h-[44px]">
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Judul Berita / Kegiatan</label>
+                            <input type="text" id="portal-news-title" required placeholder="Contoh: Pembinaan Pramuka Teladan Kanesvara" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs text-slate-800 focus:outline-none focus:border-kanesvara-pinkPrimary min-h-[44px]">
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-[11px] font-semibold text-blue-100 mb-1">Kategori Berita</label>
-                                <select id="news-category" class="w-full px-3.5 py-2.5 rounded-xl bg-blue-950 border border-blue-700 text-white text-xs focus:outline-none focus:border-kanesvara-pinkPrimary min-h-[44px]">
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Kategori Berita</label>
+                                <select id="portal-news-category" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs text-slate-800 focus:outline-none focus:border-kanesvara-pinkPrimary min-h-[44px]">
                                     <option value="Giat Ramadhan">Giat Ramadhan</option>
                                     <option value="Lomba & Kejuaraan">LKB & Pasatama Scoutition</option>
                                     <option value="Jamnas">Jamnas</option>
@@ -509,263 +722,214 @@
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[11px] font-semibold text-blue-100 mb-1">Tanggal Kegiatan</label>
-                                <input type="date" id="news-date" required class="w-full px-3.5 py-2.5 rounded-xl bg-blue-950 border border-blue-700 text-white text-xs focus:outline-none focus:border-kanesvara-pinkPrimary min-h-[44px]">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-[11px] font-semibold text-blue-100 mb-1">Penulis / Sie Humas</label>
-                                <input type="text" id="news-author" value="Humas Kanesvara" class="w-full px-3.5 py-2.5 rounded-xl bg-blue-950 border border-blue-700 text-white text-xs focus:outline-none focus:border-kanesvara-pinkPrimary min-h-[44px]">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] font-semibold text-blue-100 mb-1">URL Gambar (Opsional)</label>
-                                <input type="url" id="news-image" placeholder="https://..." class="w-full px-3.5 py-2.5 rounded-xl bg-blue-950 border border-blue-700 text-white placeholder-blue-300 text-xs focus:outline-none focus:border-kanesvara-pinkPrimary min-h-[44px]">
+                                <label class="block text-xs font-bold text-slate-700 mb-1">URL Gambar Thumbnail (Opsional)</label>
+                                <input type="url" id="portal-news-image" placeholder="https://..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs text-slate-800 focus:outline-none focus:border-kanesvara-pinkPrimary min-h-[44px]">
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-[11px] font-semibold text-blue-100 mb-1">Isi Berita Singkat</label>
-                            <textarea id="news-content" rows="3" required placeholder="Tuliskan ringkasan berita kegiatan..." class="w-full px-3.5 py-2.5 rounded-xl bg-blue-950 border border-blue-700 text-white placeholder-blue-300 text-xs focus:outline-none focus:border-kanesvara-pinkPrimary"></textarea>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Isi Berita Lengkap</label>
+                            <textarea id="portal-news-content" rows="4" required placeholder="Tuliskan berita rincian kegiatan..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs text-slate-800 focus:outline-none focus:border-kanesvara-pinkPrimary"></textarea>
                         </div>
 
-                        <div class="flex justify-end gap-2 pt-2">
-                            <button type="button" onclick="toggleHumasForm()" class="px-4 py-2.5 rounded-xl bg-blue-900 text-slate-300 text-xs font-bold hover:bg-slate-900 min-h-[44px]">Batal</button>
-                            <button type="submit" class="px-5 py-2.5 rounded-xl bg-kanesvara-pinkPrimary hover:bg-kanesvara-pinkDark text-white text-xs font-bold transition shadow-md flex items-center gap-1.5 min-h-[44px]">
-                                <i class="fa-solid fa-paper-plane"></i> Publikasikan
-                            </button>
-                        </div>
+                        <button type="submit" class="px-6 py-3 rounded-xl bg-kanesvara-pinkPrimary hover:bg-kanesvara-pinkDark text-white font-bold text-xs transition shadow-md flex items-center gap-2 min-h-[44px]">
+                            <i class="fa-solid fa-paper-plane"></i> Publikasikan Berita Sekarang
+                        </button>
                     </form>
                 </div>
-            </div>
-
-            <!-- News Grid -->
-            <div id="news-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- Dynamic Javascript Cards injected here -->
-            </div>
-        </section>
+            </section>
 
 
-        <!-- ==================== PAGE 3: HELLO SIGMA ==================== -->
-        <section id="page-sigma" class="tab-content hidden transition-all duration-200">
-            
-            <!-- Hero SIGMA 2027 (Solid Dark Blue) -->
-            <div class="rounded-3xl bg-kanesvara-blueDark text-white p-5 sm:p-8 shadow-md mb-6 border-b-4 border-kanesvara-pinkPrimary">
-                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-kanesvara-pinkPrimary text-white text-[10px] font-bold uppercase mb-3">
-                    <i class="fa-solid fa-trophy text-amber-300"></i> SCOUT COMPETITION 2027
-                </div>
-                <h2 class="font-heading text-3xl sm:text-5xl font-black text-white leading-tight mb-2">
-                    HELLO SIGMA 2027
-                </h2>
-                <p class="text-blue-100 text-xs sm:text-sm mb-5 leading-relaxed">
-                    Ajang Perlombaan Penggalang Bergengsi SD & SMP se-Jawa Barat diselenggarakan oleh Pramuka Kanesvara SMPN 2 Bojonggede.
-                </p>
-
-                <!-- Countdown Timer Container (Solid Pink) -->
-                <div class="p-4 rounded-2xl bg-kanesvara-pinkPrimary text-white shadow-sm inline-block w-full sm:w-auto">
-                    <span class="text-[10px] text-pink-100 font-bold block mb-1.5 uppercase"><i class="fa-regular fa-clock mr-1"></i> Hitung Mundur Event:</span>
-                    <div class="flex items-center gap-3 text-center">
-                        <div class="bg-white/20 px-3 py-1.5 rounded-xl">
-                            <span id="cd-days" class="font-heading font-black text-xl text-white">365</span>
-                            <span class="block text-[9px] text-pink-100 uppercase">Hari</span>
+            <!-- ==================== PAGE 5: DASHBOARD ADMIN ==================== -->
+            <section id="page-admin" class="tab-content hidden transition-all duration-200">
+                <div class="bg-slate-900 text-white rounded-3xl p-5 sm:p-8 shadow-md border-4 border-amber-500 mb-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-amber-500 text-slate-900 flex items-center justify-center text-2xl font-black">
+                                <i class="fa-solid fa-user-gear"></i>
+                            </div>
+                            <div>
+                                <h2 class="font-heading font-black text-2xl text-white">Dashboard Admin Kanesvara</h2>
+                                <p class="text-xs text-amber-300">Pusat Kendali Web, Pengunjung, & Manajemen Berita Humas</p>
+                            </div>
                         </div>
-                        <span class="text-xl font-bold text-white">:</span>
-                        <div class="bg-white/20 px-3 py-1.5 rounded-xl">
-                            <span id="cd-hours" class="font-heading font-black text-xl text-white">12</span>
-                            <span class="block text-[9px] text-pink-100 uppercase">Jam</span>
-                        </div>
-                        <span class="text-xl font-bold text-white">:</span>
-                        <div class="bg-white/20 px-3 py-1.5 rounded-xl">
-                            <span id="cd-mins" class="font-heading font-black text-xl text-white">45</span>
-                            <span class="block text-[9px] text-pink-100 uppercase">Menit</span>
-                        </div>
+                        <span class="hidden sm:inline-block px-3 py-1 bg-amber-500 text-slate-900 font-extrabold text-xs rounded-full">Akses Super Admin</span>
                     </div>
                 </div>
-            </div>
 
-            <!-- SIGMA Info Cards Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-                <!-- Coming Soon SIGMA 2027 -->
-                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="w-10 h-10 rounded-xl bg-kanesvara-pinkPrimary text-white flex items-center justify-center text-lg mb-3">
-                            <i class="fa-solid fa-calendar-check"></i>
-                        </div>
-                        <h3 class="font-heading font-bold text-base text-slate-900 mb-1">Coming Soon SIGMA 2027</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
-                            Kompetisi ketangkasan penggalang edisi 2027 dengan piala bergilir dan kategori lomba terbaru.
-                        </p>
-                    </div>
-                    <span class="text-[10px] font-bold text-white bg-kanesvara-pinkPrimary px-3 py-1 rounded-full self-start">Awal Tahun 2027</span>
-                </div>
-
-                <!-- Tentang SIGMA -->
-                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="w-10 h-10 rounded-xl bg-kanesvara-bluePrimary text-white flex items-center justify-center text-lg mb-3">
-                            <i class="fa-solid fa-circle-info"></i>
-                        </div>
-                        <h3 class="font-heading font-bold text-base text-slate-900 mb-1">Tentang SIGMA</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
-                            Ajang silaturahmi, unjuk kedisiplinan, serta ketangkasan antar regu penggalang di SMPN 2 Bojonggede.
-                        </p>
-                    </div>
-                    <span class="text-[10px] font-bold text-white bg-kanesvara-bluePrimary px-3 py-1 rounded-full self-start">Scout Competition</span>
-                </div>
-
-                <!-- Pencapaian SIGMA -->
-                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="w-10 h-10 rounded-xl bg-kanesvara-pinkPrimary text-white flex items-center justify-center text-lg mb-3">
+                <!-- Admin Analytics Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-kanesvara-bluePrimary text-white flex items-center justify-center text-xl font-bold shrink-0">
                             <i class="fa-solid fa-chart-line"></i>
                         </div>
-                        <h3 class="font-heading font-bold text-base text-slate-900 mb-1">Pencapaian SIGMA</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
-                            Telah diikuti lebih dari 50+ pangkalan penggalang dari berbagai wilayah kabupaten/kota.
-                        </p>
+                        <div>
+                            <p class="text-xs text-slate-500 font-semibold">Total Kunjungan Web</p>
+                            <h3 id="admin-total-visits" class="font-heading font-black text-2xl text-slate-900">0</h3>
+                            <p class="text-[10px] text-emerald-600 font-bold">Terpantau Realtime</p>
+                        </div>
                     </div>
-                    <span class="text-[10px] font-bold text-white bg-kanesvara-pinkPrimary px-3 py-1 rounded-full self-start">50+ Pangkalan Peserta</span>
-                </div>
 
-                <!-- Pemenang SIGMA -->
-                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
-                    <div class="w-10 h-10 rounded-xl bg-kanesvara-bluePrimary text-white flex items-center justify-center text-lg mb-3">
-                        <i class="fa-solid fa-trophy text-amber-300"></i>
-                    </div>
-                    <h3 class="font-heading font-bold text-base text-slate-900 mb-1">Pemenang SIGMA (Hall of Fame)</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed mb-3">
-                        Daftar Pangkalan Penggalang Juara Umum Bergilir edisi kompetisi sebelumnya.
-                    </p>
-                    <button onclick="openModal('modal-halloffame')" class="px-3.5 py-2 rounded-xl bg-kanesvara-blueLight text-kanesvara-blueDark text-xs font-bold hover:bg-blue-100 transition flex items-center gap-1.5 min-h-[44px]">
-                        <i class="fa-solid fa-list-ol"></i> Lihat Daftar Pemenang
-                    </button>
-                </div>
-
-                <!-- Soon Teknis SD -->
-                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
-                    <div class="w-10 h-10 rounded-xl bg-kanesvara-pinkPrimary text-white flex items-center justify-center text-lg mb-3">
-                        <i class="fa-solid fa-child"></i>
-                    </div>
-                    <h3 class="font-heading font-bold text-base text-slate-900 mb-1">Soon Teknis SD / MI</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed mb-3">
-                        Petunjuk Teknis (Juknis) mata lomba Penggalang SD: LKBB, Pionering, Sandi, & Semaphore.
-                    </p>
-                    <span class="text-[10px] font-bold text-slate-600 bg-slate-100 px-3 py-1 rounded-full"><i class="fa-solid fa-lock mr-1"></i> Rilis H-30 Event</span>
-                </div>
-
-                <!-- Soon Teknis SMP -->
-                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
-                    <div class="w-10 h-10 rounded-xl bg-kanesvara-bluePrimary text-white flex items-center justify-center text-lg mb-3">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-                    <h3 class="font-heading font-bold text-base text-slate-900 mb-1">Soon Teknis SMP / MTs</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed mb-3">
-                        Petunjuk Teknis (Juknis) mata lomba Penggalang SMP: Baris Berbaris & Yel-Yel Kreatif.
-                    </p>
-                    <span class="text-[10px] font-bold text-slate-600 bg-slate-100 px-3 py-1 rounded-full"><i class="fa-solid fa-lock mr-1"></i> Rilis H-30 Event</span>
-                </div>
-            </div>
-
-            <!-- CP Panitia & Sponsorship -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- CP Panitia (Solid Blue) -->
-                <div class="bg-kanesvara-blueDark text-white rounded-2xl p-5 shadow-sm">
-                    <div class="flex items-center gap-2.5 mb-3">
-                        <div class="w-9 h-9 rounded-xl bg-kanesvara-bluePrimary text-white flex items-center justify-center font-bold shrink-0">
-                            <i class="fa-solid fa-headset text-sm"></i>
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-kanesvara-pinkPrimary text-white flex items-center justify-center text-xl font-bold shrink-0">
+                            <i class="fa-solid fa-newspaper"></i>
                         </div>
                         <div>
-                            <h3 class="font-heading font-bold text-base text-white">Contact Person Panitia</h3>
-                            <p class="text-[11px] text-blue-200">Informasi Pendaftaran & Teknis SIGMA</p>
+                            <p class="text-xs text-slate-500 font-semibold">Total Postingan Berita</p>
+                            <h3 id="admin-total-news" class="font-heading font-black text-2xl text-slate-900">0</h3>
+                            <p class="text-[10px] text-kanesvara-pinkPrimary font-bold">Publikasi Humas</p>
                         </div>
                     </div>
-                    <div class="space-y-2 mb-2">
-                        <a href="https://wa.me/6281234567891" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-blue-950 border border-blue-800 text-xs text-white hover:bg-blue-900 min-h-[44px]">
-                            <span><i class="fa-solid fa-user text-kanesvara-pinkPrimary mr-2"></i> Ketupat SIGMA</span>
-                            <span class="px-2.5 py-1 rounded bg-emerald-600 font-bold text-[10px]">Chat WA</span>
-                        </a>
-                        <a href="https://wa.me/6281234567892" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-blue-950 border border-blue-800 text-xs text-white hover:bg-blue-900 min-h-[44px]">
-                            <span><i class="fa-solid fa-user text-kanesvara-pinkPrimary mr-2"></i> Sie Acara & Teknis</span>
-                            <span class="px-2.5 py-1 rounded bg-emerald-600 font-bold text-[10px]">Chat WA</span>
-                        </a>
-                    </div>
-                </div>
 
-                <!-- CP Sponsorship (Solid Pink) -->
-                <div class="bg-kanesvara-pinkDark text-white rounded-2xl p-5 shadow-sm">
-                    <div class="flex items-center gap-2.5 mb-3">
-                        <div class="w-9 h-9 rounded-xl bg-kanesvara-pinkPrimary text-white flex items-center justify-center font-bold shrink-0">
-                            <i class="fa-solid fa-handshake text-sm"></i>
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-xl font-bold shrink-0">
+                            <i class="fa-solid fa-users"></i>
                         </div>
                         <div>
-                            <h3 class="font-heading font-bold text-base text-white">CP Sponsorship SIGMA</h3>
-                            <p class="text-[11px] text-pink-100">Kerjasama Brand & Media Partner</p>
+                            <p class="text-xs text-slate-500 font-semibold">Total Akun Terdaftar</p>
+                            <h3 id="admin-total-users" class="font-heading font-black text-2xl text-slate-900">0</h3>
+                            <p class="text-[10px] text-amber-600 font-bold">Pengguna Aktif</p>
                         </div>
                     </div>
-                    <p class="text-xs text-pink-100 mb-4 leading-relaxed">
-                        Dukung suksesnya ajang SIGMA 2027. Kami membuka kesempatan kerjasama sponsorship dan booth.
-                    </p>
-                    <a href="https://wa.me/6281234567893" target="_blank" class="block w-full py-3 text-center rounded-xl bg-kanesvara-pinkPrimary text-white font-bold text-xs hover:bg-pink-500 transition min-h-[44px] flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-file-contract"></i> Hubungi Tim Sponsorship
-                    </a>
                 </div>
+
+                <!-- Admin News Management List -->
+                <div class="bg-white rounded-2xl p-5 sm:p-7 shadow-sm border border-slate-200">
+                    <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
+                        <h3 class="font-heading font-bold text-base text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-kanesvara-bluePrimary"></i> Manajemen & Hapus Berita Humas
+                        </h3>
+                        <span class="text-[11px] text-slate-500">Supervision Log</span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-100 text-[11px] text-slate-700 font-bold uppercase">
+                                    <th class="p-3 rounded-l-xl">Berita / Judul</th>
+                                    <th class="p-3">Penulis / Akun Humas</th>
+                                    <th class="p-3">Tanggal & Waktu Posting</th>
+                                    <th class="p-3 text-right rounded-r-xl">Aksi Admin</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-news-tbody" class="text-xs divide-y divide-slate-100">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- HUMAS UPLOAD FORM MODAL (Fast Popup) -->
+        <div id="humas-form-container" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+            <div class="bg-kanesvara-blueDark text-white w-full max-w-lg rounded-2xl p-5 sm:p-6 shadow-2xl relative border-2 border-kanesvara-bluePrimary my-auto">
+                <button onclick="toggleHumasForm()" class="absolute top-4 right-4 text-slate-300 hover:text-white w-9 h-9 rounded-xl bg-blue-900 flex items-center justify-center text-lg active:scale-95">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                
+                <div class="flex items-center gap-2.5 mb-4">
+                    <div class="w-9 h-9 rounded-xl bg-kanesvara-pinkPrimary text-white flex items-center justify-center font-bold shrink-0">
+                        <i class="fa-solid fa-cloud-arrow-up text-sm"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-heading font-bold text-base text-white">Upload Berita Humas Quick</h3>
+                        <p class="text-[10px] text-blue-200">Otomatis dipublikasikan ke Kanesvara News</p>
+                    </div>
+                </div>
+
+                <form id="news-form" onsubmit="handleAddNews(event)" class="space-y-3">
+                    <div>
+                        <label class="block text-[11px] font-semibold text-blue-100 mb-1">Judul Berita / Kegiatan</label>
+                        <input type="text" id="news-title" required placeholder="Contoh: Juara LKB & Pasatama Scoutition" class="w-full px-3.5 py-2.5 rounded-xl bg-blue-950 border border-blue-700 text-white placeholder-blue-300 text-xs focus:outline-none focus:border-kanesvara-pinkPrimary min-h-[44px]">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[11px] font-semibold text-blue-100 mb-1">Kategori Berita</label>
+                            <select id="news-category" class="w-full px-3.5 py-2.5 rounded-xl bg-blue-950 border border-blue-700 text-white text-xs focus:outline-none focus:border-kanesvara-pinkPrimary min-h-[44px]">
+                                <option value="Giat Ramadhan">Giat Ramadhan</option>
+                                <option value="Lomba & Kejuaraan">LKB & Pasatama Scoutition</option>
+                                <option value="Jamnas">Jamnas</option>
+                                <option value="Pengumuman Resmi">Pramuka Teladan</option>
+                                <option value="Lomba & Kejuaraan">LT II / LT III / LT IV</option>
+                                <option value="Pengumuman Resmi">Garuda 18</option>
+                                <option value="Garuma Special">Garuma Fun Run</option>
+                                <option value="Pengumuman Resmi">Selamat Dewan Pasukan 2026/2027</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-blue-100 mb-1">Tanggal Kegiatan</label>
+                            <input type="date" id="news-date" required class="w-full px-3.5 py-2.5 rounded-xl bg-blue-950 border border-blue-700 text-white text-xs focus:outline-none focus:border-kanesvara-pinkPrimary min-h-[44px]">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-semibold text-blue-100 mb-1">Isi Berita Singkat</label>
+                        <textarea id="news-content" rows="3" required placeholder="Tuliskan ringkasan berita kegiatan..." class="w-full px-3.5 py-2.5 rounded-xl bg-blue-950 border border-blue-700 text-white placeholder-blue-300 text-xs focus:outline-none focus:border-kanesvara-pinkPrimary"></textarea>
+                    </div>
+
+                    <div class="flex justify-end gap-2 pt-2">
+                        <button type="button" onclick="toggleHumasForm()" class="px-4 py-2.5 rounded-xl bg-blue-900 text-slate-300 text-xs font-bold hover:bg-slate-900 min-h-[44px]">Batal</button>
+                        <button type="submit" class="px-5 py-2.5 rounded-xl bg-kanesvara-pinkPrimary hover:bg-kanesvara-pinkDark text-white text-xs font-bold transition shadow-md flex items-center gap-1.5 min-h-[44px]">
+                            <i class="fa-solid fa-paper-plane"></i> Publikasikan
+                        </button>
+                    </div>
+                </form>
             </div>
-
-        </section>
-
-    </main>
-
-    <!-- Mobile Fixed Floating Action Button (FAB) for Quick News Upload -->
-    <button onclick="toggleHumasForm()" class="fixed right-4 bottom-20 z-30 md:hidden w-13 h-13 rounded-full bg-kanesvara-pinkPrimary text-white shadow-xl flex items-center justify-center text-xl active:scale-90 transition border-2 border-white">
-        <i class="fa-solid fa-plus"></i>
-    </button>
-
-    <!-- App-like Mobile Fixed Bottom Navigation Bar (< 768px) -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-40 md:hidden px-2 py-1.5 shadow-lg">
-        <div class="grid grid-cols-3 text-center">
-            <button onclick="switchTab('kanesvara')" id="bnav-kanesvara" class="bottom-nav-item py-1.5 flex flex-col items-center justify-center text-slate-500 transition">
-                <i class="fa-solid fa-shield-halved text-lg mb-0.5"></i>
-                <span class="text-[10px]">Kanesvara</span>
-            </button>
-            <button onclick="switchTab('news')" id="bnav-news" class="bottom-nav-item py-1.5 flex flex-col items-center justify-center text-slate-500 transition">
-                <i class="fa-solid fa-newspaper text-lg mb-0.5"></i>
-                <span class="text-[10px]">News</span>
-            </button>
-            <button onclick="switchTab('sigma')" id="bnav-sigma" class="bottom-nav-item py-1.5 flex flex-col items-center justify-center text-slate-500 transition">
-                <i class="fa-solid fa-trophy text-lg mb-0.5"></i>
-                <span class="text-[10px]">SIGMA</span>
-            </button>
         </div>
+
+        <!-- Floating FAB Upload (for Humas/Admin on Mobile) -->
+        <button id="mobile-fab-upload" onclick="toggleHumasForm()" class="hidden fixed right-4 bottom-20 z-30 md:hidden w-13 h-13 rounded-full bg-kanesvara-pinkPrimary text-white shadow-xl flex items-center justify-center text-xl active:scale-90 transition border-2 border-white">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+
+        <!-- App-like Mobile Fixed Bottom Navigation Bar (< 768px) -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-40 md:hidden px-2 py-1.5 shadow-lg">
+            <div class="grid grid-cols-3 text-center" id="mobile-bottom-grid">
+                <button onclick="switchTab('kanesvara')" id="bnav-kanesvara" class="bottom-nav-item py-1.5 flex flex-col items-center justify-center text-slate-500 transition">
+                    <i class="fa-solid fa-shield-halved text-lg mb-0.5"></i>
+                    <span class="text-[10px]">Kanesvara</span>
+                </button>
+                <button onclick="switchTab('news')" id="bnav-news" class="bottom-nav-item py-1.5 flex flex-col items-center justify-center text-slate-500 transition">
+                    <i class="fa-solid fa-newspaper text-lg mb-0.5"></i>
+                    <span class="text-[10px]">News</span>
+                </button>
+                <button onclick="switchTab('sigma')" id="bnav-sigma" class="bottom-nav-item py-1.5 flex flex-col items-center justify-center text-slate-500 transition">
+                    <i class="fa-solid fa-trophy text-lg mb-0.5"></i>
+                    <span class="text-[10px]">SIGMA</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Desktop Footer (Solid Blue) -->
+        <footer class="bg-kanesvara-blueDark text-slate-300 border-t-4 border-kanesvara-pinkPrimary mt-12 py-6 px-4">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-center md:text-left">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-xl bg-kanesvara-pinkPrimary text-white flex items-center justify-center font-bold">
+                        K
+                    </div>
+                    <div>
+                        <p class="font-bold text-white">KANESVARA 214 — SMPN 2 BOJONGGEDE</p>
+                        <p class="text-[10px] text-pink-200">Satria Garuda & Matahari Senja (GARUMA)</p>
+                    </div>
+                </div>
+                <p class="text-[11px] text-blue-200">
+                    &copy; 2026 Pramuka Kanesvara SMPN 2 Bojonggede. All rights reserved.
+                </p>
+            </div>
+        </footer>
+
     </div>
 
-    <!-- Desktop Footer (Solid Blue) -->
-    <footer class="bg-kanesvara-blueDark text-slate-300 border-t-4 border-kanesvara-pinkPrimary mt-12 py-6 px-4">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-center md:text-left">
-            <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-xl bg-kanesvara-pinkPrimary text-white flex items-center justify-center font-bold">
-                    K
-                </div>
-                <div>
-                    <p class="font-bold text-white">KANESVARA 214 — SMPN 2 BOJONGGEDE</p>
-                    <p class="text-[10px] text-pink-200">Satria Garuda & Matahari Senja (GARUMA)</p>
-                </div>
-            </div>
-            <p class="text-[11px] text-blue-200">
-                &copy; 2026 Pramuka Kanesvara SMPN 2 Bojonggede. All rights reserved.
-            </p>
-        </div>
-    </footer>
 
-
-    <!-- ==================== MODALS & TOAST SYSTEM ==================== -->
-
-    <!-- Toast Notification -->
+    <!-- ==================== SYSTEM MODALS & TOAST ==================== -->
     <div id="toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 hidden bg-kanesvara-pinkPrimary text-white px-4 py-2.5 rounded-xl shadow-xl text-xs font-bold flex items-center gap-2 transition-all">
-        <i class="fa-solid fa-circle-check text-sm"></i> <span id="toast-msg">Berita berhasil ditambahkan!</span>
+        <i class="fa-solid fa-circle-check text-sm"></i> <span id="toast-msg">Notifikasi sistem</span>
     </div>
 
-    <!-- Modal News Detail -->
+    <!-- Modal Detail Berita -->
     <div id="modal-news-detail" class="fixed inset-0 bg-slate-900/80 z-50 hidden flex items-center justify-center p-3 sm:p-4">
         <div class="bg-white max-w-lg w-full rounded-2xl p-5 border-2 border-kanesvara-pinkPrimary shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('modal-news-detail')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
@@ -781,7 +945,8 @@
             
             <div class="flex items-center gap-3 text-[11px] text-slate-500 mb-3 pb-2 border-b border-slate-100">
                 <span><i class="fa-regular fa-calendar text-kanesvara-pinkPrimary mr-1"></i> <span id="modal-news-date">01 Jan 2026</span></span>
-                <span><i class="fa-solid fa-user-pen text-kanesvara-bluePrimary mr-1"></i> <span id="modal-news-author">Humas</span></span>
+                <span><i class="fa-solid fa-user-pen text-kanesvara-bluePrimary mr-1"></i> Posted by: <b id="modal-news-author" class="text-slate-800">Humas</b></span>
+                <span id="modal-news-time" class="text-[10px] bg-slate-100 px-2 py-0.5 rounded font-mono">12:00</span>
             </div>
 
             <div id="modal-news-body" class="text-slate-600 text-xs leading-relaxed whitespace-pre-line mb-5">
@@ -794,204 +959,210 @@
         </div>
     </div>
 
-    <!-- Modal Hall of Fame SIGMA -->
-    <div id="modal-halloffame" class="fixed inset-0 bg-slate-900/80 z-50 hidden flex items-center justify-center p-3 sm:p-4">
-        <div class="bg-white max-w-sm w-full rounded-2xl p-5 border-2 border-kanesvara-bluePrimary shadow-2xl relative">
-            <button onclick="closeModal('modal-halloffame')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="text-center mb-4">
-                <div class="w-10 h-10 mx-auto rounded-xl bg-amber-500 text-white flex items-center justify-center text-lg mb-2 shadow-sm">
-                    <i class="fa-solid fa-trophy"></i>
-                </div>
-                <h3 class="font-heading font-bold text-base text-slate-900">Pemenang SIGMA Terdahulu</h3>
-                <p class="text-[11px] text-slate-500">Hall of Fame Juara Umum</p>
-            </div>
-            <div class="space-y-2 mb-4">
-                <div class="p-3 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-between">
-                    <div>
-                        <h4 class="font-bold text-xs text-slate-900">Juara Umum SIGMA I</h4>
-                        <p class="text-[10px] text-slate-500">Pangkalan Unggulan</p>
-                    </div>
-                    <span class="text-[10px] font-bold text-amber-600"><i class="fa-solid fa-award mr-1"></i> Trophy Emas</span>
-                </div>
-                <div class="p-3 rounded-xl bg-pink-50 border border-pink-200 flex items-center justify-between">
-                    <div>
-                        <h4 class="font-bold text-xs text-slate-900">Juara Umum SIGMA II</h4>
-                        <p class="text-[10px] text-slate-500">Regu Utama Teladan</p>
-                    </div>
-                    <span class="text-[10px] font-bold text-kanesvara-pinkPrimary"><i class="fa-solid fa-award mr-1"></i> Trophy Emas</span>
-                </div>
-            </div>
-            <button onclick="closeModal('modal-halloffame')" class="w-full py-2.5 rounded-xl bg-kanesvara-blueDark text-white text-xs font-bold hover:bg-blue-950 transition min-h-[44px]">Tutup</button>
-        </div>
-    </div>
 
-
-    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <!-- ==================== JAVASCRIPT AUTH & APPLICATION LOGIC ==================== -->
     <script>
-        // Seed News Items matching table requirements
+        // Default Seed News
         const seedNews = [
-            {
-                id: 1,
-                title: "Giat Ramadhan Kanesvara 214",
-                category: "Giat Ramadhan",
-                date: "2026-03-20",
-                author: "Humas Kanesvara",
-                image: "https://images.unsplash.com/photo-1519817650390-64a93db51149?w=600&auto=format&fit=crop&q=80",
-                content: "Pelaksanaan Giat Ramadhan Berkah berupa pembagian takjil gratis, pesantren kilat, dan buka puasa bersama anggota Pasukan Satria Garuda dan Matahari Senja SMPN 2 Bojonggede."
-            },
-            {
-                id: 2,
-                title: "LKB & PASATAMA SCOUTITION",
-                category: "Lomba & Kejuaraan",
-                date: "2026-02-15",
-                author: "Humas Kanesvara",
-                image: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=600&auto=format&fit=crop&q=80",
-                content: "Prestasi luar biasa! Kontingen Regu Satria Garuda dan Matahari Senja berhasil membawa pulang gelar Juara Umum dalam ajang LKB & PASATAMA SCOUTITION."
-            },
-            {
-                id: 3,
-                title: "Perwakilan Kontingen JAMNAS",
-                category: "Jamnas",
-                date: "2026-01-10",
-                author: "Humas Kanesvara",
-                image: "",
-                content: "Anggota terbaik Kanesvara SMPN 2 Bojonggede terpilih mewakili cabang dalam perhelatan Jambore Nasional (JAMNAS) Penggalang."
-            },
-            {
-                id: 4,
-                title: "Pelantikan Pramuka Teladan",
-                category: "Pengumuman Resmi",
-                date: "2026-04-05",
-                author: "Pembina Pramuka",
-                image: "",
-                content: "Selamat kepada adik-adik Dewan Penggalang yang telah menyelesaikan syarat kecakapan umum dan dilantik sebagai Pramuka Teladan pangkalan."
-            },
-            {
-                id: 5,
-                title: "Persiapan & Pelepasan LT II",
-                category: "Lomba & Kejuaraan",
-                date: "2026-02-01",
-                author: "Humas Kanesvara",
-                image: "",
-                content: "Pelepasan resmi regu Satria Garuda dan Matahari Senja menuju ajang Lomba Tingkat II (LT II) Kwarran Bojonggede."
-            },
-            {
-                id: 6,
-                title: "Perjuangan Gemilang di LT III",
-                category: "Lomba & Kejuaraan",
-                date: "2026-02-28",
-                author: "Humas Kanesvara",
-                image: "",
-                content: "Regu Garuma Kanesvara sukses menorehkan gelar juara di Lomba Tingkat III (LT III) tingkat Kwarcab."
-            },
-            {
-                id: 7,
-                title: "Kontingen Kanesvara Menuju LT IV",
-                category: "Lomba & Kejuaraan",
-                date: "2026-03-12",
-                author: "Humas Kanesvara",
-                image: "",
-                content: "Langkah mantap kontingen Kanesvara SMPN 2 Bojonggede mewakili daerah di Lomba Tingkat IV (LT IV) tingkat Jawa Barat."
-            },
-            {
-                id: 8,
-                title: "Pelantikan GARUDA 18 Kanesvara",
-                category: "Pengumuman Resmi",
-                date: "2026-04-12",
-                author: "Pembina Pramuka",
-                image: "",
-                content: "Selamat atas pengukuhan Angkatan GARUDA 18 Kanesvara. Terus kibarkan semangat kepemimpinan di SMPN 2 Bojonggede!"
-            },
-            {
-                id: 9,
-                title: "GARUMA FUN RUN 2026",
-                category: "Garuma Special",
-                date: "2026-04-18",
-                author: "Tim GARUMA",
-                image: "",
-                content: "Giat Olahraga Sehat & Garuma Fun Run bersama alumni, purna, dan penggalang aktif Kanesvara SMPN 2 Bojonggede."
-            },
-            {
-                id: 10,
-                title: "Selamat Dewan Pasukan Penggalang 2026/2027",
-                category: "Pengumuman Resmi",
-                date: "2026-04-25",
-                author: "Pembina Kanesvara",
-                image: "",
-                content: "Selamat dan sukses atas serah terima jabatan serta pelantikan pengurus Dewan Pasukan Penggalang Masa Bhakti 2026/2027!"
-            }
+            { id: 1, title: "Giat Ramadhan Kanesvara 214", category: "Giat Ramadhan", date: "2026-03-20", time: "14:30 WIB", author: "Humas Kanesvara", content: "Pelaksanaan Giat Ramadhan Berkah berupa pembagian takjil gratis, pesantren kilat, dan buka puasa bersama regu GARUMA SMPN 2 Bojonggede." },
+            { id: 2, title: "LKB & PASATAMA SCOUTITION", category: "Lomba & Kejuaraan", date: "2026-02-15", time: "09:15 WIB", author: "Humas Kanesvara", content: "Prestasi luar biasa! Kontingen Regu Satria Garuda dan Matahari Senja berhasil meraih Juara Umum di LKB & PASATAMA SCOUTITION." },
+            { id: 3, title: "Perwakilan Kontingen JAMNAS", category: "Jamnas", date: "2026-01-10", time: "10:00 WIB", author: "Humas Kanesvara", content: "Anggota penggalang Kanesvara terpilih mewakili cabang dalam perhelatan Jambore Nasional." },
+            { id: 4, title: "Pelantikan Pramuka Teladan", category: "Pengumuman Resmi", date: "2026-04-05", time: "16:00 WIB", author: "Pembina Utama", content: "Penggalang terbaik Kanesvara resmi dilantik menjadi Pramuka Teladan Pangkalan SMPN 2 Bojonggede." },
+            { id: 5, title: "Persiapan & Pelepasan LT II", category: "Lomba & Kejuaraan", date: "2026-02-01", time: "08:00 WIB", author: "Humas Kanesvara", content: "Pelepasan resmi regu Satria Garuda dan Matahari Senja menuju LT II Kwarran Bojonggede." },
+            { id: 6, title: "Perjuangan Gemilang di LT III", category: "Lomba & Kejuaraan", date: "2026-02-28", time: "17:30 WIB", author: "Humas Kanesvara", content: "Regu Garuma Kanesvara sukses menorehkan kejuaraan di Lomba Tingkat III Kwarcab." },
+            { id: 7, title: "Kontingen Kanesvara Menuju LT IV", category: "Lomba & Kejuaraan", date: "2026-03-12", time: "11:20 WIB", author: "Humas Kanesvara", content: "Langkah mantap kontingen Kanesvara SMPN 2 Bojonggede mewakili daerah di LT IV tingkat Provinsi Jawa Barat." },
+            { id: 8, title: "Pelantikan GARUDA 18 Kanesvara", category: "Pengumuman Resmi", date: "2026-04-12", time: "15:45 WIB", author: "Humas Kanesvara", content: "Selamat atas pengukuhan Angkatan GARUDA 18 Kanesvara SMPN 2 Bojonggede." },
+            { id: 9, title: "GARUMA FUN RUN 2026", category: "Garuma Special", date: "2026-04-18", time: "06:30 WIB", author: "Tim Garuma", content: "Giat Olahraga Sehat & Fun Run bersama seluruh alumni dan anggota aktif Kanesvara." },
+            { id: 10, title: "Selamat Dewan Pasukan Penggalang 2026/2027", category: "Pengumuman Resmi", date: "2026-04-25", time: "13:00 WIB", author: "Pembina Pramuka", content: "Serah terima jabatan pengurus Dewan Pasukan Penggalang Kanesvara Masa Bhakti 2026/2027." }
         ];
 
+        let currentUser = null; // { username, role: 'admin'|'humas'|'user' }
         let currentActiveCategory = 'all';
 
-        // LocalStorage Fetch
-        function getNewsData() {
-            const stored = localStorage.getItem('kanesvara_news_mobile_v1');
-            if (stored) {
-                try {
-                    return JSON.parse(stored);
-                } catch (e) {
-                    return seedNews;
-                }
+        // --- VISITOR & USERS DATA MANAGEMENT ---
+        function getVisitorCount() {
+            return parseInt(localStorage.getItem('kanesvara_visitor_count') || '124');
+        }
+
+        function incrementVisitorCount() {
+            let count = getVisitorCount() + 1;
+            localStorage.setItem('kanesvara_visitor_count', count.toString());
+            return count;
+        }
+
+        function getUsersList() {
+            const users = localStorage.getItem('kanesvara_registered_users');
+            return users ? JSON.parse(users) : [
+                { username: 'admin', role: 'admin', name: 'Super Admin Kanesvara' },
+                { username: 'humas', role: 'humas', name: 'Tim Humas Kanesvara' }
+            ];
+        }
+
+        // --- AUTHENTICATION HANDLERS ---
+        function toggleAuthMode(mode) {
+            const loginForm = document.getElementById('auth-login-form');
+            const regForm = document.getElementById('auth-register-form');
+            const tabLogin = document.getElementById('tab-login-btn');
+            const tabReg = document.getElementById('tab-register-btn');
+
+            if (mode === 'login') {
+                loginForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
+                tabLogin.classList.add('bg-kanesvara-bluePrimary', 'text-white');
+                tabLogin.classList.remove('text-slate-600');
+                tabReg.classList.remove('bg-kanesvara-bluePrimary', 'text-white');
+                tabReg.classList.add('text-slate-600');
             } else {
-                localStorage.setItem('kanesvara_news_mobile_v1', JSON.stringify(seedNews));
+                loginForm.classList.add('hidden');
+                regForm.classList.remove('hidden');
+                tabReg.classList.add('bg-kanesvara-bluePrimary', 'text-white');
+                tabReg.classList.remove('text-slate-600');
+                tabLogin.classList.remove('bg-kanesvara-bluePrimary', 'text-white');
+                tabLogin.classList.add('text-slate-600');
+            }
+        }
+
+        function handleAuthLogin(e) {
+            e.preventDefault();
+            const usernameInput = document.getElementById('login-username').value.trim();
+            const passInput = document.getElementById('login-password').value.trim();
+
+            // Admin Check
+            if (usernameInput.toLowerCase() === 'admin' && passInput === 'admin123') {
+                loginUser({ username: 'admin', name: 'Administrator Web', role: 'admin' });
+                return;
+            }
+
+            // Humas Check
+            if (passInput === 'humas123') {
+                const humasName = usernameInput ? usernameInput : 'Humas Kanesvara';
+                loginUser({ username: humasName, name: humasName, role: 'humas' });
+                return;
+            }
+
+            // Registered User Check
+            const users = getUsersList();
+            const found = users.find(u => u.username.toLowerCase() === usernameInput.toLowerCase());
+            if (found) {
+                loginUser(found);
+                return;
+            }
+
+            // Default fallback as standard member
+            loginUser({ username: usernameInput || 'Penggalang', name: usernameInput || 'Anggota Kanesvara', role: 'user' });
+        }
+
+        function handleAuthRegister(e) {
+            e.preventDefault();
+            const fullname = document.getElementById('reg-fullname').value.trim();
+            const username = document.getElementById('reg-username').value.trim();
+
+            const newUser = { username: username, name: fullname, role: 'user' };
+            const users = getUsersList();
+            users.push(newUser);
+            localStorage.setItem('kanesvara_registered_users', JSON.stringify(users));
+
+            loginUser(newUser);
+        }
+
+        function continueAsGuest() {
+            loginUser({ username: 'Tamu', name: 'Pengunjung Umum', role: 'user' });
+        }
+
+        function loginUser(userObj) {
+            currentUser = userObj;
+            incrementVisitorCount();
+
+            // Hide Login Gate
+            document.getElementById('login-modal-overlay').classList.add('hidden');
+            document.getElementById('main-app-wrapper').classList.remove('hidden');
+            document.getElementById('main-app-wrapper').classList.add('flex');
+
+            // Update UI Badges & Navigation privileges
+            updateUserPrivileges();
+            renderVisitorStats();
+            renderNewsFeed();
+            showToast(`Selamat datang, ${currentUser.name}!`);
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            document.getElementById('main-app-wrapper').classList.add('hidden');
+            document.getElementById('main-app-wrapper').classList.remove('flex');
+            document.getElementById('login-modal-overlay').classList.remove('hidden');
+        }
+
+        function updateUserPrivileges() {
+            if (!currentUser) return;
+
+            const badge = document.getElementById('user-badge');
+            badge.innerText = `${currentUser.name} (${currentUser.role.toUpperCase()})`;
+
+            const navHumas = document.getElementById('nav-humas-portal');
+            const navAdmin = document.getElementById('nav-admin');
+            const mobHumasDrawer = document.getElementById('mob-humas-drawer');
+            const mobAdminDrawer = document.getElementById('mob-admin-drawer');
+            const headerUploadBtn = document.getElementById('humas-upload-btn-header');
+            const mobileFab = document.getElementById('mobile-fab-upload');
+            const mobHeaderUploadBtn = document.getElementById('mobile-humas-btn');
+
+            if (currentUser.role === 'admin') {
+                navAdmin.classList.remove('hidden');
+                navHumas.classList.remove('hidden');
+                mobAdminDrawer.classList.remove('hidden');
+                mobHumasDrawer.classList.remove('hidden');
+                headerUploadBtn.classList.remove('hidden');
+                mobileFab.classList.remove('hidden');
+                if(mobHeaderUploadBtn) mobHeaderUploadBtn.classList.remove('hidden');
+            } else if (currentUser.role === 'humas') {
+                navHumas.classList.remove('hidden');
+                navAdmin.classList.add('hidden');
+                mobHumasDrawer.classList.remove('hidden');
+                mobAdminDrawer.classList.add('hidden');
+                headerUploadBtn.classList.remove('hidden');
+                mobileFab.classList.remove('hidden');
+                if(mobHeaderUploadBtn) mobHeaderUploadBtn.classList.remove('hidden');
+            } else {
+                navHumas.classList.add('hidden');
+                navAdmin.classList.add('hidden');
+                mobHumasDrawer.classList.add('hidden');
+                mobAdminDrawer.classList.add('hidden');
+                headerUploadBtn.classList.add('hidden');
+                mobileFab.classList.add('hidden');
+                if(mobHeaderUploadBtn) mobHeaderUploadBtn.classList.add('hidden');
+            }
+        }
+
+        function renderVisitorStats() {
+            const count = getVisitorCount();
+            const users = getUsersList();
+
+            document.getElementById('drawer-visitor-count').innerText = count;
+            document.getElementById('admin-total-visits').innerText = count;
+            document.getElementById('admin-total-users').innerText = users.length;
+        }
+
+        // --- NEWS DATA & CRUD ---
+        function getNewsData() {
+            const stored = localStorage.getItem('kanesvara_news_db_v2');
+            if (stored) {
+                try { return JSON.parse(stored); } catch (e) { return seedNews; }
+            } else {
+                localStorage.setItem('kanesvara_news_db_v2', JSON.stringify(seedNews));
                 return seedNews;
             }
         }
 
-        // TAB SWITCHING (Desktop + Mobile Bottom Nav)
-        function switchTab(tabName) {
-            // Hide all pages
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-
-            // Desktop Nav Highlight
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('bg-kanesvara-pinkPrimary', 'text-white', 'shadow-sm');
-                btn.classList.add('text-slate-300', 'hover:bg-blue-900');
-            });
-
-            // Mobile Bottom Nav Highlight
-            document.querySelectorAll('.bottom-nav-item').forEach(bnav => {
-                bnav.classList.remove('active');
-            });
-
-            // Show selected page
-            const selectedContent = document.getElementById(`page-${tabName}`);
-            if (selectedContent) selectedContent.classList.remove('hidden');
-
-            // Set active states
-            const activeDesktopNav = document.getElementById(`nav-${tabName}`);
-            if (activeDesktopNav) {
-                activeDesktopNav.classList.add('bg-kanesvara-pinkPrimary', 'text-white', 'shadow-sm');
-                activeDesktopNav.classList.remove('text-slate-300', 'hover:bg-blue-900');
-            }
-
-            const activeBottomNav = document.getElementById(`bnav-${tabName}`);
-            if (activeBottomNav) activeBottomNav.classList.add('active');
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        function saveNewsData(data) {
+            localStorage.setItem('kanesvara_news_db_v2', JSON.stringify(data));
+            renderNewsFeed();
+            renderAdminTable();
         }
 
-        // MOBILE DRAWER TOGGLE
-        function toggleMobileDrawer() {
-            const drawer = document.getElementById('mobile-drawer');
-            const overlay = document.getElementById('drawer-overlay');
-            const isOpen = !drawer.classList.contains('translate-x-full');
-
-            if (isOpen) {
-                drawer.classList.add('translate-x-full');
-                overlay.classList.add('hidden');
-            } else {
-                drawer.classList.remove('translate-x-full');
-                overlay.classList.remove('hidden');
-            }
-        }
-
-        // RENDER NEWS FEED
         function renderNewsFeed() {
             const container = document.getElementById('news-grid');
+            if (!container) return;
+
             const news = getNewsData();
             const searchQuery = (document.getElementById('news-search')?.value || '').toLowerCase().trim();
 
@@ -1009,7 +1180,7 @@
                 );
             }
 
-            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+            filtered.sort((a, b) => b.id - a.id);
 
             if (filtered.length === 0) {
                 container.innerHTML = `
@@ -1044,81 +1215,170 @@
                             ${item.content}
                         </p>
                     </div>
-                    <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
-                        <span class="text-[10px] text-slate-500 font-semibold truncate">
+                    <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px]">
+                        <span class="text-slate-500 font-semibold truncate">
                             <i class="fa-solid fa-user-pen text-kanesvara-bluePrimary mr-1"></i>${item.author || 'Humas'}
                         </span>
-                        <button onclick='openNewsModal(${JSON.stringify(item).replace(/'/g, "&apos;")})' class="text-[11px] font-bold text-kanesvara-pinkPrimary hover:underline flex items-center gap-1 shrink-0 ml-2">
+                        <button onclick='openNewsModal(${JSON.stringify(item).replace(/'/g, "&apos;")})' class="font-bold text-kanesvara-pinkPrimary hover:underline flex items-center gap-1 shrink-0 ml-2">
                             Baca <i class="fa-solid fa-arrow-right text-[9px]"></i>
                         </button>
                     </div>
                 </div>
             `).join('');
+
+            // Update Total News count for Admin
+            const totalNewsEl = document.getElementById('admin-total-news');
+            if (totalNewsEl) totalNewsEl.innerText = news.length;
         }
 
-        // SEARCH & FILTER HANDLERS
-        function handleSearchNews() {
-            renderNewsFeed();
-        }
-
-        function filterNews(category, btnElement) {
-            currentActiveCategory = category;
-            
-            document.querySelectorAll('.news-filter-btn').forEach(btn => {
-                btn.classList.remove('bg-kanesvara-bluePrimary', 'text-white', 'shadow-sm');
-                btn.classList.add('bg-slate-100', 'text-slate-600');
-            });
-
-            if (btnElement) {
-                btnElement.classList.add('bg-kanesvara-bluePrimary', 'text-white', 'shadow-sm');
-                btnElement.classList.remove('bg-slate-100', 'text-slate-600');
-            }
-
-            renderNewsFeed();
-        }
-
-        // HUMAS FORM TOGGLE & ADD NEWS
-        function toggleHumasForm() {
-            const formContainer = document.getElementById('humas-form-container');
-            formContainer.classList.toggle('hidden');
-        }
-
-        function handleAddNews(event) {
-            event.preventDefault();
-
+        function handleAddNews(e) {
+            e.preventDefault();
             const title = document.getElementById('news-title').value.trim();
             const category = document.getElementById('news-category').value;
             const date = document.getElementById('news-date').value;
-            const author = document.getElementById('news-author').value.trim() || 'Humas Kanesvara';
-            const image = document.getElementById('news-image').value.trim();
             const content = document.getElementById('news-content').value.trim();
 
-            if (!title || !date || !content) return;
+            const now = new Date();
+            const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')} WIB`;
 
             const list = getNewsData();
-            const newItem = {
+            list.push({
                 id: Date.now(),
                 title: title,
                 category: category,
                 date: date,
-                author: author,
-                image: image,
+                time: timeStr,
+                author: currentUser ? currentUser.name : 'Humas Kanesvara',
                 content: content
-            };
+            });
 
-            list.push(newItem);
-            localStorage.setItem('kanesvara_news_mobile_v1', JSON.stringify(list));
-
+            saveNewsData(list);
             document.getElementById('news-form').reset();
             toggleHumasForm();
-            
-            // Auto switch to news tab and show toast
             switchTab('news');
-            renderNewsFeed();
             showToast('Berita berhasil dipublikasikan!');
         }
 
-        // UTILS
+        function handleAddNewsPortal(e) {
+            e.preventDefault();
+            const title = document.getElementById('portal-news-title').value.trim();
+            const category = document.getElementById('portal-news-category').value;
+            const image = document.getElementById('portal-news-image').value.trim();
+            const content = document.getElementById('portal-news-content').value.trim();
+
+            const now = new Date();
+            const dateStr = now.toISOString().split('T')[0];
+            const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')} WIB`;
+
+            const list = getNewsData();
+            list.push({
+                id: Date.now(),
+                title: title,
+                category: category,
+                date: dateStr,
+                time: timeStr,
+                image: image,
+                author: currentUser ? currentUser.name : 'Humas Portal',
+                content: content
+            });
+
+            saveNewsData(list);
+            switchTab('news');
+            showToast('Berita Humas berhasil diunggah!');
+        }
+
+        // --- ADMIN MANAGEMENT ---
+        function renderAdminTable() {
+            const tbody = document.getElementById('admin-news-tbody');
+            if (!tbody) return;
+
+            const list = getNewsData();
+            list.sort((a, b) => b.id - a.id);
+
+            tbody.innerHTML = list.map(item => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-3 font-bold text-slate-800">${item.title}</td>
+                    <td class="p-3 text-slate-600">${item.author || 'Humas'}</td>
+                    <td class="p-3 text-slate-500 font-mono text-[11px]">${item.date} (${item.time || 'WIB'})</td>
+                    <td class="p-3 text-right">
+                        <button onclick="adminDeletePost(${item.id})" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold text-[10px] min-h-[32px]">
+                            <i class="fa-solid fa-trash mr-1"></i> Hapus
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function adminDeletePost(id) {
+            let list = getNewsData();
+            list = list.filter(item => item.id !== id);
+            saveNewsData(list);
+            showToast('Postongan berita telah dihapus oleh Admin');
+        }
+
+        // --- NAVIGATION & UI CONTROLS ---
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (!btn.id.includes('admin') && !btn.id.includes('humas-portal')) {
+                    btn.classList.remove('bg-kanesvara-pinkPrimary', 'text-white', 'shadow-sm');
+                    btn.classList.add('text-slate-300', 'hover:bg-blue-900');
+                }
+            });
+
+            document.querySelectorAll('.bottom-nav-item').forEach(bnav => bnav.classList.remove('active'));
+
+            const selectedContent = document.getElementById(`page-${tabName}`);
+            if (selectedContent) selectedContent.classList.remove('hidden');
+
+            const activeDesktopNav = document.getElementById(`nav-${tabName}`);
+            if (activeDesktopNav && !tabName.includes('admin') && !tabName.includes('humas')) {
+                activeDesktopNav.classList.add('bg-kanesvara-pinkPrimary', 'text-white', 'shadow-sm');
+            }
+
+            const activeBottomNav = document.getElementById(`bnav-${tabName}`);
+            if (activeBottomNav) activeBottomNav.classList.add('active');
+
+            if (tabName === 'admin') renderAdminTable();
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileDrawer() {
+            const drawer = document.getElementById('mobile-drawer');
+            const overlay = document.getElementById('drawer-overlay');
+            const isOpen = !drawer.classList.contains('translate-x-full');
+
+            if (isOpen) {
+                drawer.classList.add('translate-x-full');
+                overlay.classList.add('hidden');
+            } else {
+                drawer.classList.remove('translate-x-full');
+                overlay.classList.remove('hidden');
+            }
+        }
+
+        function toggleHumasForm() {
+            document.getElementById('humas-form-container').classList.toggle('hidden');
+        }
+
+        function filterNews(category, btnElement) {
+            currentActiveCategory = category;
+            document.querySelectorAll('.news-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-kanesvara-bluePrimary', 'text-white', 'shadow-sm');
+                btn.classList.add('bg-slate-100', 'text-slate-600');
+            });
+            if (btnElement) {
+                btnElement.classList.add('bg-kanesvara-bluePrimary', 'text-white', 'shadow-sm');
+            }
+            renderNewsFeed();
+        }
+
+        function handleSearchNews() {
+            renderNewsFeed();
+        }
+
         function formatDate(dateStr) {
             if (!dateStr) return '';
             const options = { day: 'numeric', month: 'short', year: 'numeric' };
@@ -1142,6 +1402,7 @@
             document.getElementById('modal-news-cat').innerText = newsObj.category;
             document.getElementById('modal-news-date').innerText = formatDate(newsObj.date);
             document.getElementById('modal-news-author').innerText = newsObj.author || 'Humas Kanesvara';
+            document.getElementById('modal-news-time').innerText = newsObj.time || '12:00 WIB';
             document.getElementById('modal-news-body').innerText = newsObj.content;
 
             const imgContainer = document.getElementById('modal-img-container');
@@ -1156,19 +1417,10 @@
             document.getElementById('modal-news-detail').classList.remove('hidden');
         }
 
-        function openModal(id) {
-            document.getElementById(id)?.classList.remove('hidden');
-        }
+        function openModal(id) { document.getElementById(id)?.classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id)?.classList.add('hidden'); }
 
-        function closeModal(id) {
-            document.getElementById(id)?.classList.add('hidden');
-        }
-
-        // INIT
         window.onload = function() {
-            switchTab('kanesvara');
-            renderNewsFeed();
-
             const today = new Date().toISOString().split('T')[0];
             const dateInput = document.getElementById('news-date');
             if (dateInput) dateInput.value = today;
